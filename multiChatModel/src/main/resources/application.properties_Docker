@@ -1,0 +1,12 @@
+spring.application.name=openAI
+
+# Logging
+logging.pattern.console=%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n
+
+# Spring AI / Ollama Configuration using Docker hosted ollama
+spring.ai.openai.base-url=http://localhost:12434
+spring.ai.openai.chat.options.model=ai/gemma3
+spring.ai.openai.api-key=dummy
+
+# Optional: Prevents timeout while Ollama loads the model into memory
+spring.ai.openai.chat.options.timeout=60s
