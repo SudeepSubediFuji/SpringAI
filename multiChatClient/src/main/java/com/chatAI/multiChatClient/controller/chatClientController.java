@@ -13,10 +13,14 @@ public class chatClientController {
 
     private final ChatClient openAiChatClient;
     private final ChatClient ollamaChatClientBuild;
+    private final ChatClient ollamaDevBotBuild;
     public chatClientController(@Qualifier("openAiChatClient") ChatClient openAiChatClient,
-                                @Qualifier("ollamaChatClientBuild") ChatClient ollamaChatClientBuild){
+                                @Qualifier("ollamaChatClientBuild") ChatClient ollamaChatClientBuild,
+                                @Qualifier("ollamaDevBotBuild") ChatClient ollamaDevBotBuild) {
         this.openAiChatClient = openAiChatClient;
         this.ollamaChatClientBuild = ollamaChatClientBuild;
+        this.ollamaDevBotBuild = ollamaDevBotBuild;
+
     }
 
     @GetMapping("/openai")
@@ -29,4 +33,22 @@ public class chatClientController {
         return ollamaChatClientBuild.prompt(message).call().content();
     }
 
+    // 会社中だけの相談でけるようなカスタムAI
+    //.system --> System Role --> message set
+    @GetMapping("/ollamaoffice")
+    public String ollamaofficeAiChat(@RequestParam("message") String message){
+        return ollamaChatClientBuild.prompt().user(message).call().content();
+    }
+
+    @GetMapping("/openoffice")
+    public String openAIofficeAiChat(@RequestParam("message") String message){
+        return openAiChatClient.prompt().user(message).system("""
+    You are a internal management AI.That will only deal with office related queries. No any funny business. 
+    """).call().content();
+    }
+
+    @GetMapping("/devbot")
+    public String devBotAiChat(@RequestParam("message") String message){
+        return ollamaDevBotBuild.prompt().user(message).call().content();
+        }
 }
