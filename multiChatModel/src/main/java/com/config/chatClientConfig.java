@@ -14,17 +14,17 @@ public class chatClientConfig {
         return ChatClient.create(openAiChatModel);
     }
 
-    @Bean
-    public ChatClient OllamaChatClient(OllamaChatModel ollamaChatModel){
-        return ChatClient.create(ollamaChatModel);
-    }
+//    @Bean
+//    public ChatClient OllamaChatClient(OllamaChatModel ollamaChatModel){
+//        return ChatClient.create(ollamaChatModel);
+//    }
 
 //    // Rough part
-//    @Bean
-//    public ChatClient ollamaChatClientBuild(OllamaChatModel ollamaChatModel){
-//        ChatClient.Builder chatClientBuilder = ChatClient.builder(ollamaChatModel);
-//        return chatClientBuilder.build();
-//    }
+    @Bean
+    public ChatClient ollamaChatClientBuild(OllamaChatModel ollamaChatModel){
+        ChatClient.Builder chatClientBuilder = ChatClient.builder(ollamaChatModel);
+        return chatClientBuilder.build();
+    }
 
 
 }
