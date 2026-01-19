@@ -1,6 +1,7 @@
 package com.chatAI.multiChatClient.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,6 +64,7 @@ public class promptTemplateController {
     public String openEmailResponse(@RequestParam("customerName") String customerName,
                                 @RequestParam("customerMessage") String customerMessage){
         return openAiChatClient.prompt()
+                .advisors(new SimpleLoggerAdvisor())
                 .system(emailTemplate)
                 .user(PromptTemplateSpec->
                         PromptTemplateSpec.text(userPromptTemplate)
@@ -70,5 +72,7 @@ public class promptTemplateController {
                                 .param("customerMessage",customerMessage))
                 .call().content();
     }
+
+
 
 }

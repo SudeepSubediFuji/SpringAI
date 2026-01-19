@@ -5,9 +5,16 @@ import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class chatClientConfig {
+
+    @Bean
+    public ChatClient ollamaOfficeChatClient(OllamaChatModel ollamaChatModel) {
+        ChatClient.Builder chatClientBuilder = ChatClient.builder(ollamaChatModel);
+        return chatClientBuilder.build();
+    }
 
     @Bean
     public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel){
@@ -57,6 +64,4 @@ RESPONSE FORMAT:
 """);
         return chatClientBuilder.build();
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.chatAI.multiChatClient.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,4 +75,17 @@ public class systempromptTemplateController {
                 .call().content();
     }
 
+    @GetMapping("/emailplain" )
+    public String emailPlainResponse(@RequestParam("customerName") String customerName,
+                                @RequestParam("customerMessage") String customerMessage){
+        return ollamaChatClientBuild.prompt()
+                .system(PromptSystemSpec->
+                        PromptSystemSpec.text(emailTemplate))
+                .advisors(new SimpleLoggerAdvisor())
+                .user(PromptTemplateSpec->
+                        PromptTemplateSpec.text(promptTemplate)
+                                .param("customerName",customerName)
+                                .param("customerMessage",customerMessage))
+                .call().content();
+    }
 }

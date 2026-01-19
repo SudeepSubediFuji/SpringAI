@@ -1,0 +1,101 @@
+17:42:01.355 DEBUG [http-nio-8080-exec-2] o.s.a.c.c.a.SimpleLoggerAdvisor - request: ChatClientRequest[prompt=Prompt{messages=[SystemMessage{textContent='You are an expert customer service representative.
+Use the following template to respond to customer inquiries in a polite and professional manner.
+
+Template:
+Dear {customerName},
+
+Thank you for reaching out to us. We appreciate your interest in our services.
+
+{responseBody}
+
+If you have any further questions or need additional assistance, please do not hesitate to contact us.
+
+Best regards,
+[Your Company Name] Customer Service Team
+', messageType=SYSTEM, metadata={messageType=SYSTEM}}, UserMessage{content='The customer named other than this has sent the following message:
+"how to write resource request application"
+Please draft a response using the email template provided, ensuring to address the customer's concerns and provide helpful information.
+', metadata={messageType=USER}, messageType=USER}], modelOptions=OpenAiChatOptions: {"streamUsage":false,"model":"gpt-4o-mini","temperature":0.7}}, context={}]
+17:42:07.864 DEBUG [http-nio-8080-exec-2] o.s.a.c.c.a.SimpleLoggerAdvisor - response: {
+"result" : {
+"metadata" : {
+"finishReason" : "STOP",
+"contentFilters" : [ ],
+"empty" : true
+},
+"output" : {
+"messageType" : "ASSISTANT",
+"metadata" : {
+"role" : "ASSISTANT",
+"messageType" : "ASSISTANT",
+"refusal" : "",
+"finishReason" : "STOP",
+"annotations" : [ ],
+"index" : 0,
+"id" : "chatcmpl-Czf7hRmxnrM0te8lZJinNAAV6AxSs"
+},
+"toolCalls" : [ ],
+"media" : [ ],
+"text" : "Dear Customer,\n\nThank you for reaching out to us. We appreciate your interest in our services.\n\nTo write a resource request application, you may follow these general steps:\n\n1. **Subject Line**: Clearly state the purpose of your email, such as \"Request for Resources\" or \"Resource Request Application.\"\n2. **Introduction**: Begin with a polite greeting and introduce yourself, including your position and the purpose of your request.\n3. **Detail Your Needs**: Clearly outline the resources you are requesting. Be specific about the type of resources, quantity, and any relevant deadlines.\n4. **Justification**: Explain why you need these resources and how they will benefit your project or organization.\n5. **Conclusion**: Thank the recipient for considering your request and express your willingness to provide further information if needed. \n6. **Closing**: Use a polite closing statement and include your contact information.\n\nIf you have any further questions or need additional assistance, please do not hesitate to contact us.\n\nBest regards,  \n[Your Company Name] Customer Service Team"
+}
+},
+"metadata" : {
+"id" : "chatcmpl-Czf7hRmxnrM0te8lZJinNAAV6AxSs",
+"model" : "gpt-4o-mini-2024-07-18",
+"rateLimit" : {
+"requestsLimit" : 10000,
+"requestsRemaining" : 9999,
+"requestsReset" : 64.000000000,
+"tokensLimit" : 200000,
+"tokensRemaining" : 199825,
+"tokensReset" : 0.052000000
+},
+"usage" : {
+"promptTokens" : 134,
+"completionTokens" : 213,
+"totalTokens" : 347,
+"nativeUsage" : {
+"completion_tokens" : 213,
+"prompt_tokens" : 134,
+"total_tokens" : 347,
+"prompt_tokens_details" : {
+"audio_tokens" : 0,
+"cached_tokens" : 0
+},
+"completion_tokens_details" : {
+"reasoning_tokens" : 0,
+"accepted_prediction_tokens" : 0,
+"audio_tokens" : 0,
+"rejected_prediction_tokens" : 0
+}
+}
+},
+"promptMetadata" : [ ],
+"empty" : false
+},
+"results" : [ {
+"metadata" : {
+"finishReason" : "STOP",
+"contentFilters" : [ ],
+"empty" : true
+},
+"output" : {
+"messageType" : "ASSISTANT",
+"metadata" : {
+"role" : "ASSISTANT",
+"messageType" : "ASSISTANT",
+"refusal" : "",
+"finishReason" : "STOP",
+"annotations" : [ ],
+"index" : 0,
+"id" : "chatcmpl-Czf7hRmxnrM0te8lZJinNAAV6AxSs"
+},
+"toolCalls" : [ ],
+"media" : [ ],
+"text" : "Dear Customer,\n\nThank you for reaching out to us. We appreciate your interest in our services.\n\nTo write a resource request application, you may follow these general steps:\n\n1. **Subject Line**: Clearly state the purpose of your email, such as \"Request for Resources\" or \"Resource Request Application.\"\n2. **Introduction**: Begin with a polite greeting and introduce yourself, including your position and the purpose of your request.\n3. **Detail Your Needs**: Clearly outline the resources you are requesting. Be specific about the type of resources, quantity, and any relevant deadlines.\n4. **Justification**: Explain why you need these resources and how they will benefit your project or organization.\n5. **Conclusion**: Thank the recipient for considering your request and express your willingness to provide further information if needed. \n6. **Closing**: Use a polite closing statement and include your contact information.\n\nIf you have any further questions or need additional assistance, please do not hesitate to contact us.\n\nBest regards,  \n[Your Company Name] Customer Service Team"
+}
+} ]
+}
+ターゲット VM から切断されました。アドレス: '127.0.0.1:63223'、トランスポート: 'ソケット'
+17:43:44.252 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.t.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+17:43:44.258 INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown - Graceful shutdown complete
