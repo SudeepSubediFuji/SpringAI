@@ -1,5 +1,6 @@
 package com.chatAI.multiChatClient.controller;
 
+import com.chatAI.multiChatClient.advisor.tokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class advisorController {
 
     private final ChatClient ollamaOfficeChatClient;
+    private final ChatClient openAISimpleChatClient;
 //    private final ChatClient openAiChatClient;
 
-    public advisorController(@Qualifier("ollamaOfficeChatClient") ChatClient ollamaOfficeChatClient) {
+    public advisorController(@Qualifier("ollamaOfficeChatClient") ChatClient ollamaOfficeChatClient,
+                             @Qualifier("openAISimpleChatClient") ChatClient openAISimpleChatClient) {
         this.ollamaOfficeChatClient = ollamaOfficeChatClient;
-//        this.openAiChatClient = openAiChatClient;
+        this.openAISimpleChatClient = openAISimpleChatClient;
     }
 
     @GetMapping("/office")
@@ -39,5 +42,13 @@ public class advisorController {
 //                        AdvisorSpec.param("",new SimpleLoggerAdvisor()).call().content());
 //    }
 
+    @GetMapping("/openai")
+    public String openAiAdvisorChat(@RequestParam ("message") String message) {
+        return openAISimpleChatClient.prompt(message).call().content();
+    }
 
+    @GetMapping("/open")
+    public String openAiAdvisorChat2(@RequestParam ("message") String message) {
+        return ollamaOfficeChatClient.prompt(message).advisors(new tokenUsageAuditAdvisor()).call().content();
+    }
 }

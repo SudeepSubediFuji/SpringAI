@@ -1,18 +1,22 @@
 package com.chatAI.multiChatClient.config;
 
+import com.chatAI.multiChatClient.advisor.tokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import java.util.List;
+
 @Configuration
 public class chatClientConfig {
 
     @Bean
     public ChatClient ollamaOfficeChatClient(OllamaChatModel ollamaChatModel) {
-        ChatClient.Builder chatClientBuilder = ChatClient.builder(ollamaChatModel);
+        ChatClient.Builder chatClientBuilder = ChatClient.builder(ollamaChatModel).defaultAdvisors(new SimpleLoggerAdvisor());
         return chatClientBuilder.build();
     }
 
@@ -62,6 +66,12 @@ RESPONSE FORMAT:
 - Include error handling
 - Suggest next steps
 """);
+        return chatClientBuilder.build();
+    }
+
+    @Bean
+    public ChatClient openAISimpleChatClient(OpenAiChatModel openAiChatModel){
+        ChatClient.Builder chatClientBuilder = ChatClient.builder(openAiChatModel).defaultAdvisors(List.of(new SimpleLoggerAdvisor(), new tokenUsageAuditAdvisor()));
         return chatClientBuilder.build();
     }
 }
