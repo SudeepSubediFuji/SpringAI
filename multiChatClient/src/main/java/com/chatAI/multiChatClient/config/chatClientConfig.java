@@ -3,11 +3,13 @@ package com.chatAI.multiChatClient.config;
 import com.chatAI.multiChatClient.advisor.tokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+//import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
@@ -20,16 +22,37 @@ public class chatClientConfig {
         return chatClientBuilder.build();
     }
 
+// This Doesn't work because of circular dependency
+//    @Bean
+//    public ChatClient simpleOpenAiChatClient(ChatClient.Builder openAiChatModelBuilder){
+//        ChatOptions chatOptions = ChatOptions.builder().model("gpt-4o-mini").temperature(0.75).maxTokens(200).presencePenalty(0.6).build();
+//        return openAiChatModelBuilder.defaultOptions(chatOptions).defaultAdvisors(new SimpleLoggerAdvisor()).build();
+//    }
+
+    // This works fine
+    @Bean
+    public ChatClient simpleOpenAiChatClient(OpenAiChatModel openAiChatsModel){
+        ChatOptions chatOptions = ChatOptions.builder().model("gpt-4o-mini").temperature(0.75).maxTokens(200).presencePenalty(0.6).build();
+        return ChatClient.builder(openAiChatsModel).defaultOptions(chatOptions).defaultAdvisors(new SimpleLoggerAdvisor()).build();
+    }
+
+    // This also works fine
+//    @Bean
+//    public ChatClient simpleOpenAiChatClient(ChatClient openAiChatClient){
+//        ChatOptions chatOptions = ChatOptions.builder().model("gpt-4o-mini").temperature(0.75).maxTokens(200).presencePenalty(0.6).build();
+//        return openAiChatClient.mutate().defaultOptions(chatOptions).build();
+//    }
+
     @Bean
     public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel){
 
         return ChatClient.create(openAiChatModel);
     }
 
-//    @Bean
-//    public ChatClient OllamaChatClient(OllamaChatModel ollamaChatModel){
-//        return ChatClient.create(ollamaChatModel);
-//    }
+    @Bean
+    public ChatClient OllamaChatClient(OllamaChatModel ollamaChatModel){
+        return ChatClient.create(ollamaChatModel);
+    }
 
     //    // Rough part
     @Bean

@@ -2,7 +2,6 @@ package com.chatAI.multiChatClient.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +14,7 @@ public class chatClientController {
     private final ChatClient openAiChatClient;
     private final ChatClient ollamaChatClientBuild;
     private final ChatClient ollamaDevBotBuild;
+//    private final ChatClient
     public chatClientController(@Qualifier("openAiChatClient") ChatClient openAiChatClient,
                                 @Qualifier("ollamaChatClientBuild") ChatClient ollamaChatClientBuild,
                                 @Qualifier("ollamaDevBotBuild") ChatClient ollamaDevBotBuild) {

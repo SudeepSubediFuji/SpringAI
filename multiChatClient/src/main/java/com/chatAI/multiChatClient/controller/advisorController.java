@@ -48,7 +48,7 @@ public class advisorController {
     }
 
     @GetMapping("/open")
-    public String openAiAdvisorChat2(@RequestParam ("message") String message) {
+    public String ollamaAdvisorChat2(@RequestParam ("message") String message) {
         return ollamaOfficeChatClient.prompt(message).advisors(new tokenUsageAuditAdvisor()).call().content();
     }
 }
