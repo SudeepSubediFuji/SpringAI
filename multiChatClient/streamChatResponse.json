@@ -1,0 +1,506 @@
+[
+  {
+    "result": {
+      "output": {
+        "messageType": "ASSISTANT",
+        "metadata": {
+          "role": "ASSISTANT",
+          "messageType": "ASSISTANT",
+          "refusal": "",
+          "finishReason": "",
+          "index": 0,
+          "annotations": [],
+          "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+          "reasoningContent": ""
+        },
+        "toolCalls": [],
+        "media": [],
+        "text": ""
+      },
+      "metadata": {
+        "finishReason": "",
+        "contentFilters": [],
+        "empty": true
+      }
+    },
+    "metadata": {
+      "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+      "model": "chatgpt-4o-latest",
+      "rateLimit": {
+        "requestsRemaining": 0,
+        "tokensRemaining": 0,
+        "tokensReset": "PT0S",
+        "tokensLimit": 0,
+        "requestsLimit": 0,
+        "requestsReset": "PT0S"
+      },
+      "usage": {
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "nativeUsage": {
+
+        },
+        "totalTokens": 0
+      },
+      "promptMetadata": [],
+      "empty": false
+    },
+    "results": [
+      {
+        "output": {
+          "messageType": "ASSISTANT",
+          "metadata": {
+            "role": "ASSISTANT",
+            "messageType": "ASSISTANT",
+            "refusal": "",
+            "finishReason": "",
+            "index": 0,
+            "annotations": [],
+            "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+            "reasoningContent": ""
+          },
+          "toolCalls": [],
+          "media": [],
+          "text": ""
+        },
+        "metadata": {
+          "finishReason": "",
+          "contentFilters": [],
+          "empty": true
+        }
+      }
+    ]
+  },
+  {
+    "result": {
+      "output": {
+        "messageType": "ASSISTANT",
+        "metadata": {
+          "role": "ASSISTANT",
+          "messageType": "ASSISTANT",
+          "refusal": "",
+          "finishReason": "",
+          "index": 0,
+          "annotations": [],
+          "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+          "reasoningContent": ""
+        },
+        "toolCalls": [],
+        "media": [],
+        "text": "Sure"
+      },
+      "metadata": {
+        "finishReason": "",
+        "contentFilters": [],
+        "empty": true
+      }
+    },
+    "metadata": {
+      "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+      "model": "chatgpt-4o-latest",
+      "rateLimit": {
+        "requestsRemaining": 0,
+        "tokensRemaining": 0,
+        "tokensReset": "PT0S",
+        "tokensLimit": 0,
+        "requestsLimit": 0,
+        "requestsReset": "PT0S"
+      },
+      "usage": {
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "nativeUsage": {
+
+        },
+        "totalTokens": 0
+      },
+      "promptMetadata": [],
+      "empty": false
+    },
+    "results": [
+      {
+        "output": {
+          "messageType": "ASSISTANT",
+          "metadata": {
+            "role": "ASSISTANT",
+            "messageType": "ASSISTANT",
+            "refusal": "",
+            "finishReason": "",
+            "index": 0,
+            "annotations": [],
+            "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+            "reasoningContent": ""
+          },
+          "toolCalls": [],
+          "media": [],
+          "text": "Sure"
+        },
+        "metadata": {
+          "finishReason": "",
+          "contentFilters": [],
+          "empty": true
+        }
+      }
+    ]
+  },
+  {
+    "result": {
+      "output": {
+        "messageType": "ASSISTANT",
+        "metadata": {
+          "role": "ASSISTANT",
+          "messageType": "ASSISTANT",
+          "refusal": "",
+          "finishReason": "",
+          "index": 0,
+          "annotations": [],
+          "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+          "reasoningContent": ""
+        },
+        "toolCalls": [],
+        "media": [],
+        "text": "!"
+      },
+      "metadata": {
+        "finishReason": "",
+        "contentFilters": [],
+        "empty": true
+      }
+    },
+    "metadata": {
+      "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+      "model": "chatgpt-4o-latest",
+      "rateLimit": {
+        "requestsRemaining": 0,
+        "tokensRemaining": 0,
+        "tokensReset": "PT0S",
+        "tokensLimit": 0,
+        "requestsLimit": 0,
+        "requestsReset": "PT0S"
+      },
+      "usage": {
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "nativeUsage": {
+
+        },
+        "totalTokens": 0
+      },
+      "promptMetadata": [],
+      "empty": false
+    },
+    "results": [
+      {
+        "output": {
+          "messageType": "ASSISTANT",
+          "metadata": {
+            "role": "ASSISTANT",
+            "messageType": "ASSISTANT",
+            "refusal": "",
+            "finishReason": "",
+            "index": 0,
+            "annotations": [],
+            "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+            "reasoningContent": ""
+          },
+          "toolCalls": [],
+          "media": [],
+          "text": "!"
+        },
+        "metadata": {
+          "finishReason": "",
+          "contentFilters": [],
+          "empty": true
+        }
+      }
+    ]
+  },
+  {
+    "result": {
+      "output": {
+        "messageType": "ASSISTANT",
+        "metadata": {
+          "role": "ASSISTANT",
+          "messageType": "ASSISTANT",
+          "refusal": "",
+          "finishReason": "",
+          "index": 0,
+          "annotations": [],
+          "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+          "reasoningContent": ""
+        },
+        "toolCalls": [],
+        "media": [],
+        "text": " In"
+      },
+      "metadata": {
+        "finishReason": "",
+        "contentFilters": [],
+        "empty": true
+      }
+    },
+    "metadata": {
+      "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+      "model": "chatgpt-4o-latest",
+      "rateLimit": {
+        "requestsRemaining": 0,
+        "tokensRemaining": 0,
+        "tokensReset": "PT0S",
+        "tokensLimit": 0,
+        "requestsLimit": 0,
+        "requestsReset": "PT0S"
+      },
+      "usage": {
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "nativeUsage": {
+
+        },
+        "totalTokens": 0
+      },
+      "promptMetadata": [],
+      "empty": false
+    },
+    "results": [
+      {
+        "output": {
+          "messageType": "ASSISTANT",
+          "metadata": {
+            "role": "ASSISTANT",
+            "messageType": "ASSISTANT",
+            "refusal": "",
+            "finishReason": "",
+            "index": 0,
+            "annotations": [],
+            "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+            "reasoningContent": ""
+          },
+          "toolCalls": [],
+          "media": [],
+          "text": " In"
+        },
+        "metadata": {
+          "finishReason": "",
+          "contentFilters": [],
+          "empty": true
+        }
+      }
+    ]
+  },
+  {
+    "result": {
+      "output": {
+        "messageType": "ASSISTANT",
+        "metadata": {
+          "role": "ASSISTANT",
+          "messageType": "ASSISTANT",
+          "refusal": "",
+          "finishReason": "",
+          "index": 0,
+          "annotations": [],
+          "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+          "reasoningContent": ""
+        },
+        "toolCalls": [],
+        "media": [],
+        "text": " AI"
+      },
+      "metadata": {
+        "finishReason": "",
+        "contentFilters": [],
+        "empty": true
+      }
+    },
+    "metadata": {
+      "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+      "model": "chatgpt-4o-latest",
+      "rateLimit": {
+        "requestsRemaining": 0,
+        "tokensRemaining": 0,
+        "tokensReset": "PT0S",
+        "tokensLimit": 0,
+        "requestsLimit": 0,
+        "requestsReset": "PT0S"
+      },
+      "usage": {
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "nativeUsage": {
+
+        },
+        "totalTokens": 0
+      },
+      "promptMetadata": [],
+      "empty": false
+    },
+    "results": [
+      {
+        "output": {
+          "messageType": "ASSISTANT",
+          "metadata": {
+            "role": "ASSISTANT",
+            "messageType": "ASSISTANT",
+            "refusal": "",
+            "finishReason": "",
+            "index": 0,
+            "annotations": [],
+            "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+            "reasoningContent": ""
+          },
+          "toolCalls": [],
+          "media": [],
+          "text": " AI"
+        },
+        "metadata": {
+          "finishReason": "",
+          "contentFilters": [],
+          "empty": true
+        }
+      }
+    ]
+  },
+  {
+    "result": {
+      "output": {
+        "messageType": "ASSISTANT",
+        "metadata": {
+          "role": "ASSISTANT",
+          "messageType": "ASSISTANT",
+          "refusal": "",
+          "finishReason": "",
+          "index": 0,
+          "annotations": [],
+          "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+          "reasoningContent": ""
+        },
+        "toolCalls": [],
+        "media": [],
+        "text": ","
+      },
+      "metadata": {
+        "finishReason": "",
+        "contentFilters": [],
+        "empty": true
+      }
+    },
+    "metadata": {
+      "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+      "model": "chatgpt-4o-latest",
+      "rateLimit": {
+        "requestsRemaining": 0,
+        "tokensRemaining": 0,
+        "tokensReset": "PT0S",
+        "tokensLimit": 0,
+        "requestsLimit": 0,
+        "requestsReset": "PT0S"
+      },
+      "usage": {
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "nativeUsage": {
+
+        },
+        "totalTokens": 0
+      },
+      "promptMetadata": [],
+      "empty": false
+    },
+    "results": [
+      {
+        "output": {
+          "messageType": "ASSISTANT",
+          "metadata": {
+            "role": "ASSISTANT",
+            "messageType": "ASSISTANT",
+            "refusal": "",
+            "finishReason": "",
+            "index": 0,
+            "annotations": [],
+            "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+            "reasoningContent": ""
+          },
+          "toolCalls": [],
+          "media": [],
+          "text": ","
+        },
+        "metadata": {
+          "finishReason": "",
+          "contentFilters": [],
+          "empty": true
+        }
+      }
+    ]
+  },
+  {
+    "result": {
+      "output": {
+        "messageType": "ASSISTANT",
+        "metadata": {
+          "role": "ASSISTANT",
+          "messageType": "ASSISTANT",
+          "refusal": "",
+          "finishReason": "LENGTH",
+          "index": 0,
+          "annotations": [],
+          "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+          "reasoningContent": ""
+        },
+        "toolCalls": [],
+        "media": [],
+        "text": null
+      },
+      "metadata": {
+        "finishReason": "LENGTH",
+        "contentFilters": [],
+        "empty": true
+      }
+    },
+    "metadata": {
+      "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+      "model": "chatgpt-4o-latest",
+      "rateLimit": {
+        "requestsRemaining": 0,
+        "tokensRemaining": 0,
+        "tokensReset": "PT0S",
+        "tokensLimit": 0,
+        "requestsLimit": 0,
+        "requestsReset": "PT0S"
+      },
+      "usage": {
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "nativeUsage": {
+
+        },
+        "totalTokens": 0
+      },
+      "promptMetadata": [],
+      "empty": false
+    },
+    "results": [
+      {
+        "output": {
+          "messageType": "ASSISTANT",
+          "metadata": {
+            "role": "ASSISTANT",
+            "messageType": "ASSISTANT",
+            "refusal": "",
+            "finishReason": "LENGTH",
+            "index": 0,
+            "annotations": [],
+            "id": "chatcmpl-D0HQIvdpoOFy5zNrReH8LY5hJFtNi",
+            "reasoningContent": ""
+          },
+          "toolCalls": [],
+          "media": [],
+          "text": null
+        },
+        "metadata": {
+          "finishReason": "LENGTH",
+          "contentFilters": [],
+          "empty": true
+        }
+      }
+    ]
+  }
+]

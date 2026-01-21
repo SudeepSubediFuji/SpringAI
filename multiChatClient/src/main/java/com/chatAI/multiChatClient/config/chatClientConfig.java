@@ -6,6 +6,7 @@ import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.ollama.api.OllamaChatOptions;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -97,4 +98,12 @@ RESPONSE FORMAT:
         ChatClient.Builder chatClientBuilder = ChatClient.builder(openAiChatModel).defaultAdvisors(List.of(new SimpleLoggerAdvisor(), new tokenUsageAuditAdvisor()));
         return chatClientBuilder.build();
     }
+
+    // deepseek-r1:8b
+    @Bean
+    public ChatClient ollamaChatClientTest(OllamaChatModel ollamaChatModel){
+        ChatClient.Builder chatClientBuilder = ChatClient.builder(ollamaChatModel).defaultAdvisors(new SimpleLoggerAdvisor(), new tokenUsageAuditAdvisor());
+        return chatClientBuilder.build();
+    }
+
 }
