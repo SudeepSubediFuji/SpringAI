@@ -6,11 +6,11 @@ import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.ai.ollama.api.OllamaChatOptions;
 import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
@@ -38,11 +38,17 @@ public class chatClientConfig {
     }
 
     // This also works fine
-//    @Bean
-//    public ChatClient simpleOpenAiChatClient(ChatClient openAiChatClient){
-//        ChatOptions chatOptions = ChatOptions.builder().model("gpt-4o-mini").temperature(0.75).maxTokens(200).presencePenalty(0.6).build();
-//        return openAiChatClient.mutate().defaultOptions(chatOptions).build();
-//    }
+    @Bean
+    public ChatClient chatMemoryClientBase(ChatClient openAiChatClient){
+        ChatOptions chatOptions = ChatOptions.builder().model("gpt-4o-mini").temperature(0.75).maxTokens(200).presencePenalty(0.6).build();
+        return openAiChatClient.mutate().defaultOptions(chatOptions).build();
+    }
+
+    @Bean
+    public ChatClient ollamaChatMemoryClientBase(OllamaChatModel ollamaChatModel){
+        ChatClient.Builder ollamaChatClient = ChatClient.builder(ollamaChatModel).defaultAdvisors(new SimpleLoggerAdvisor());
+        return ollamaChatClient.build();
+    }
 
     @Bean
     public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel){

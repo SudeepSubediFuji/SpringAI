@@ -82,13 +82,6 @@ public class StructuredOutputController {
         return ResponseEntity.ok(cities);
     }
 
-    // Bean Output Example
-    @GetMapping("/test7")
-    public ResponseEntity<CountryCity> chatListCitys4(@RequestParam("message") String message) {
-        CountryCity cities = openAiChatClient.prompt(message).call().entity(new BeanOutputConverter<> (CountryCity.class));
-        return ResponseEntity.ok(cities);
-    }
-
     @GetMapping("/test8")
     public ResponseEntity<List<CountryRiver>> chatListRivers(@RequestParam("message") String message) {
         List<CountryRiver> rivers = openAiChatClient.prompt(message).call().entity(new ParameterizedTypeReference<List<CountryRiver>>(){});
