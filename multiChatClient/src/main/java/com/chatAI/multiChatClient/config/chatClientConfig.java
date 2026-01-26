@@ -51,6 +51,13 @@ public class chatClientConfig {
     }
 
     @Bean
+    public ChatClient openAiChatMemoryClientBase(OpenAiChatModel openAiChatModel){
+        ChatOptions chatOptions = ChatOptions.builder().model("gpt-5-nano").temperature(1.0).build();
+        ChatClient.Builder openAiChatClientBuilder = ChatClient.builder(openAiChatModel).defaultAdvisors(new SimpleLoggerAdvisor());
+        return openAiChatClientBuilder.defaultOptions(chatOptions).build();
+    }
+
+    @Bean
     public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel){
 
         return ChatClient.create(openAiChatModel);
