@@ -5,10 +5,10 @@
 3. 左上の「＋」ボタンをクリックをして、「新規構成を追加」を表示されます。
 そこからアプリケーションを選んでください。
 4. 以下のように設定
-名前:　MultiChatClientApplication
+名前:　SpringAiVectorApplication
 ビルドと実行：
 Java盤：21
-メインクラス：com.chatAI.multiChatClient.MultiChatClientApplication
+メインクラス：com.example.springaivector.SpringAiVectorApplication
 環境変数：OPENAI_API_KEY=あなたのOpenAIのAPIキーを入力してください
 使用するモジュール：SpringAiVector
 5. 適用をクリックをして、OKをクリックをしてください。
@@ -21,15 +21,13 @@ Java盤：21
 2. Mavenがインストールされていることを確認してください。
 3. Java 21がインストールされていることを確認してください。
 4. プロジェクトの依存関係が正しく解決されていることを確認してください。
-5. OllamaのAPIを使用したい場合、Ollamaのインストールとモデルのダウンロードが必要です。(おすすめ：https://ollama.com/library/llama3.2:1b)
-※OllamaのAPIキーは不要です。Ollamaはローカルで動作します。移動しないとOllamaのAPIを使用できません。
 
 本ポロジェクトを実行する方法：
 Git clone をして、そこのフォルダパスにタミヤで入って、以下のコマンドを実行してください。
 
 ```
 # テストをスキップしてビルド
-mvn clean install
+mvn clean install -DskipTests
 ```
 
 その後、Intellij Ideaで上記の設定を行い、アプリケーションを実行してください。
