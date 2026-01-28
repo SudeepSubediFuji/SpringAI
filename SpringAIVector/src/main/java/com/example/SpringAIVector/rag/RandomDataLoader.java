@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 public class RandomDataLoader {
 
     private final VectorStore vectorStore;
-//    Logger logger = Logger.getLogger(RandomDataLoader.class.getName());
+    Logger logger = Logger.getLogger(RandomDataLoader.class.getName());
 
     public RandomDataLoader(VectorStore vectorStore){
         this.vectorStore=vectorStore;
     }
 
-//    @PostConstruct
+    @PostConstruct
     public void loadSentencesIntoVectorStore(){
         List<String> sentences = List.of(
                 "African Elephant has a long, versatile trunk and large, heat-dissipating ears." ,
@@ -47,6 +47,7 @@ public class RandomDataLoader {
         // map to document -> collector will collect and convert to list
        List<Document> documents = sentences.stream().map(Document::new).collect(Collectors.toList());
        vectorStore.add(documents);
+         logger.info("Random sentences loaded into Vector Store");
     }
 
 }

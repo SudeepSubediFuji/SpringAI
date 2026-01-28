@@ -1,0 +1,90 @@
+11:18:06.239 DEBUG [http-nio-8080-exec-2] o.s.a.c.c.a.SimpleLoggerAdvisor - request: ChatClientRequest[prompt=Prompt{messages=[SystemMessage{textContent='You are AI assistant for a Zoo Management System. Your task is to provide information related to animals in the zoo only based on the provided documents.
+If the answer is not found in the DOCUMENTS section , respond with "I don't know".
+
+
+DOCUMENTS:
+------------
+Honey Bee has a complex social structure and the ability to pollinate flowers.
+Chameleon has independently rotating eyes and a long, sticky tongue for catching insects.
+Great White Shark has rows of serrated teeth and a highly developed sense of smell.
+------------', messageType=SYSTEM, metadata={messageType=SYSTEM}}, UserMessage{content='Tell me about Honey bee', metadata={messageType=USER}, messageType=USER}, UserMessage{content='Tell me about Honey bee', metadata={messageType=USER}, messageType=USER}], modelOptions=OpenAiChatOptions: {"streamUsage":false,"model":"gpt-5-mini"}}, context={chat_memory_conversation_id=sudh}]
+11:18:11.193 DEBUG [http-nio-8080-exec-2] o.s.a.c.c.a.SimpleLoggerAdvisor - response: {
+  "result" : {
+    "metadata" : {
+      "finishReason" : "STOP",
+      "contentFilters" : [ ],
+      "empty" : true
+    },
+    "output" : {
+      "messageType" : "ASSISTANT",
+      "metadata" : {
+        "role" : "ASSISTANT",
+        "messageType" : "ASSISTANT",
+        "finishReason" : "STOP",
+        "refusal" : "",
+        "index" : 0,
+        "annotations" : [ ],
+        "id" : "chatcmpl-D2pQ7cVel9VjT6LmJvoUQrnTgwM7N"
+      },
+      "toolCalls" : [ ],
+      "media" : [ ],
+      "text" : "Honey Bee has a complex social structure and the ability to pollinate flowers."
+    }
+  },
+  "metadata" : {
+    "id" : "chatcmpl-D2pQ7cVel9VjT6LmJvoUQrnTgwM7N",
+    "model" : "gpt-5-mini-2025-08-07",
+    "rateLimit" : {
+      "requestsLimit" : 500,
+      "requestsRemaining" : 499,
+      "tokensLimit" : 500000,
+      "tokensRemaining" : 499850,
+      "requestsReset" : 0.120000000,
+      "tokensReset" : 0.018000000
+    },
+    "usage" : {
+      "promptTokens" : 127,
+      "completionTokens" : 216,
+      "totalTokens" : 343,
+      "nativeUsage" : {
+        "completion_tokens" : 216,
+        "prompt_tokens" : 127,
+        "total_tokens" : 343,
+        "prompt_tokens_details" : {
+          "audio_tokens" : 0,
+          "cached_tokens" : 0
+        },
+        "completion_tokens_details" : {
+          "reasoning_tokens" : 192,
+          "accepted_prediction_tokens" : 0,
+          "audio_tokens" : 0,
+          "rejected_prediction_tokens" : 0
+        }
+      }
+    },
+    "promptMetadata" : [ ],
+    "empty" : false
+  },
+  "results" : [ {
+    "metadata" : {
+      "finishReason" : "STOP",
+      "contentFilters" : [ ],
+      "empty" : true
+    },
+    "output" : {
+      "messageType" : "ASSISTANT",
+      "metadata" : {
+        "role" : "ASSISTANT",
+        "messageType" : "ASSISTANT",
+        "finishReason" : "STOP",
+        "refusal" : "",
+        "index" : 0,
+        "annotations" : [ ],
+        "id" : "chatcmpl-D2pQ7cVel9VjT6LmJvoUQrnTgwM7N"
+      },
+      "toolCalls" : [ ],
+      "media" : [ ],
+      "text" : "Honey Bee has a complex social structure and the ability to pollinate flowers."
+    }
+  } ]
+}
