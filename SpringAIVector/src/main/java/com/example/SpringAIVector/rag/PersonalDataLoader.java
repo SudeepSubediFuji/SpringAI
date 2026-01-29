@@ -10,12 +10,12 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 //@Component
-public class RandomDataLoader {
+public class PersonalDataLoader {
 
     private final VectorStore vectorStore;
-    Logger logger = Logger.getLogger(RandomDataLoader.class.getName());
+    Logger logger = Logger.getLogger(PersonalDataLoader.class.getName());
 
-    public RandomDataLoader(VectorStore vectorStore){
+    public PersonalDataLoader(VectorStore vectorStore){
         this.vectorStore=vectorStore;
     }
 
@@ -43,8 +43,8 @@ public class RandomDataLoader {
         );
 
         // map to document -> collector will collect and convert to list
-       List<Document> documents = sentences.stream().map(Document::new).collect(Collectors.toList());
-       vectorStore.add(documents);
+       List<Document> personalDocuments = sentences.stream().map(Document::new).collect(Collectors.toList());
+       vectorStore.add(personalDocuments);
          logger.info("Random sentences loaded into Vector Store");
     }
 

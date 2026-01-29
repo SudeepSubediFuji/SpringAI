@@ -4,6 +4,7 @@ import org.apache.logging.log4j.simple.SimpleLogger;
 import org.springframework.ai.chat.client.ChatClient;
 //import org.springframework.ai.chat.client.ResponseEntity;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -34,12 +35,12 @@ public class ragController {
         this.vectorStore=vectorStore;
     }
 
-    @GetMapping("/rag" )
+    @GetMapping("/animalInfo" )
     public ResponseEntity<String> zooBot(@RequestHeader("username") String username,
                                          @RequestParam("message") String message) {
         logger.info("RAG request received from user: " + username + " with message: " + message);
         SearchRequest similarDoc =
-                SearchRequest.builder().query(message).topK(3).similarityThreshold(0.5).build();
+                SearchRequest.builder().query(message).topK(3).similarityThreshold(0.3).build();
         List<Document> similaritySearch = vectorStore.similaritySearch(similarDoc);
        String similarText = similaritySearch.stream()
                .map(Document::getText)
@@ -51,4 +52,27 @@ public class ragController {
        logger.info("RAG answer generated for user: " + answer);
        return ResponseEntity.ok(answer);
     }
+    @GetMapping("/rag2")
+    public String zoo(String message){
+        return chatClient.prompt(message).user(promptTemplate).call().content();
+    }
+
+    @Value("classpath:/promptTemplates/XarvisSystemTemplate.st")
+    Resource XarvisSystemTemplate;
+
+    @GetMapping("/xarvis")
+    public ResponseEntity<String> xarvisController(@RequestHeader("username") String username,
+                                                      @RequestParam("message") String message){
+        SearchRequest similarDoc =
+                SearchRequest.builder().query(message).topK(3).similarityThreshold(0.7).build();
+        List<Document> similarSearch = vectorStore.similaritySearch(similarDoc);
+        String similarPattern = similarSearch.stream().map(Document::getText).collect(Collectors.joining(System.lineSeparator()));
+        String answer = chatClient.prompt()
+                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID,username))
+                .system(promptSystemSpec -> promptSystemSpec.text(XarvisSystemTemplate).param("personalDocuments",similarPattern))
+                .user(message)
+                .call().content();
+        return ResponseEntity.ok(answer);
+    }
+
 }
