@@ -34,4 +34,15 @@ mvn clean install -DskipTests
 以下のリンクから、Qdrantのダッシュボードにアクセスして、コレクションが作成されていることを確認できます。
 http://localhost:6333/dashboard#/collections
 
-
+## 課題・問題
+時々DockerとDocker ComposeはSpringAiでランタイムで見つかれませんというエラーが表示されます。
+そういう時はDocker エクステンションをIntellijのマルケットプレスでインストールをして、ALT＋８を押下、
+そして、サービスを開きます。そこの左上のDockerの画像に緑色が表示されたらDockerはちゃんとに動いていることは確認できます。
+そうじゃない場合は、以下のようにしてください。
+1. Intellijの設定に開いて「ビルダー、実行、デプロイ」に開いて、
+2. そこからDockerに開いて、仮想マシンのパスとローカルパスを設定してください。
+3. 仮想マシンのパスはWslターミナルから入って、そこから自分のプロジェクトのパスを探してください。
+私の場合、
+仮想マシンのパス：docker-desktop:/mnt/host/c/Users/SudeepFuji/Study/Java/SpringAI/SpringAIVector
+ローカルパス：C:\Users\SudeepFuji\Study\Java\SpringAI\SpringAIVector
+![スクリーンショット 2026-01-29 111535.png](../../../../Pictures/Screenshots/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202026-01-29%20111535.png)
