@@ -1,9 +1,6 @@
 package com.example.SpringAIVector.rag;
-
 import jakarta.annotation.PostConstruct;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.transformer.splitter.TextSplitter;
-import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -15,24 +12,22 @@ import java.util.logging.Logger;
 
 
 @Component
-public class HrPolicyLoader {
+public class FullPdfLoader {
 
     private final VectorStore vectorStore;
-    Logger logger = Logger.getLogger(HrPolicyLoader.class.getName());
-    public HrPolicyLoader(VectorStore vectorStore){
+    Logger logger = Logger.getLogger(FullPdfLoader.class.getName());
+    public FullPdfLoader(VectorStore vectorStore){
         this.vectorStore=vectorStore;
     }
 
     @Value("classpath:/Documents/CompanyInfo.pdf")
     Resource CompanyInfo;
 
-    @PostConstruct
+//    @PostConstruct
     public void pdfLoader(){
         TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(CompanyInfo);
         List<Document> companyInfo = tikaDocumentReader.get();
-        TextSplitter textSplitter = TokenTextSplitter.builder().withMaxNumChunks(3000).withChunkSize(300).build();
-        vectorStore.add(textSplitter.split(companyInfo));
-
+        vectorStore.add(companyInfo);
         logger.info("CompanyInfo got loaded to VectorStore");
     }
 

@@ -1,5 +1,6 @@
 package com.example.SpringAIVector.controller;
 
+//import com.example.SpringAIVector.advisor.tokenUsageAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.document.Document;
@@ -32,18 +33,21 @@ public class CompanyInfoPdfController {
     }
 
     @GetMapping("/companyInfo" )
-    public ResponseEntity<String> zooBot(@RequestHeader("username") String username,
+    public ResponseEntity<String> fujiBot(@RequestHeader("username") String username,
                                          @RequestParam("message") String message) {
         logger.info("RAG request received from user: " + username + " with message: " + message);
-        SearchRequest similarDoc =
-                SearchRequest.builder().query(message).topK(3).similarityThreshold(0.7).build();
-        List<Document> similaritySearch = vectorStore.similaritySearch(similarDoc);
-       String similarText = similaritySearch.stream()
-               .map(Document::getText)
-               .collect(Collectors.joining(System.lineSeparator()));
+        // SearchRequestでは、どういう行動で検索するのかを設定します。
+//        SearchRequest similarDoc =
+//                SearchRequest.builder().query(message).topK(3).similarityThreshold(0.7).build();
+//        //　VectorStoreにそのSearchRequestインスタンスをDocumentのList型のオブジェクトに設定します。
+//        List<Document> similaritySearch = vectorStore.similaritySearch(similarDoc);
+//        //　そのDocumentのList型のオブジェクトからString型に変換するため、Streamインスタンスでmap機能を使って、テクストに変換し、Collectorを使ってラインセパレート・ラインを消します。
+//       String similarText = similaritySearch.stream()
+//               .map(Document::getText)
+//               .collect(Collectors.joining(System.lineSeparator()));
        String answer = chatClient.prompt(message)
                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID,username))
-               .system(promptSystemSpec -> promptSystemSpec.text(CompanyInfoTemplate).param("companyInfo",similarText))
+//               .system(promptSystemSpec -> promptSystemSpec.text(CompanyInfoTemplate).param("companyInfo",similarText))
                .user(message).call().content();
        logger.info("RAG answer generated for user: " + answer);
        return ResponseEntity.ok(answer);
