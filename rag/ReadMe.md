@@ -24,12 +24,12 @@
    ![img.png](img.png)
 
 ## 注意点：
-1. OpenAIのAPIキーとTavilyのApiキーを取得して、環境変数に設定する必要があります。
-以下のリンクに開いて、
-  TavilyAI エージェント： https://auth.tavily.com/u/signup/identifier?state=hKFo2SB5TE1IdFpjQlZiQU15d1lzdFBWeTNZRFA4YVpjenZYWqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIHJxeS0xWFN4WkNRY2ZvQ0hyTm1tZzJHbGcyNHhla3pto2NpZNkgUlJJQXZ2WE5GeHBmVFdJb3pYMW1YcUxueVVtWVNUclE
-  OpenApi: https://platform.openai.com/docs/overview
-  ※TavilyAIエージェントはアカウントを作成して、無料盤を使って良い。（注意：一か月で1000クレジット無料）
-　※OpenAIは無料Apiキーで足りない可能性があり、$5のキーを買って良い。
+1. OpenAIのAPIキーとTavilyのApiキーを取得して、環境変数に設定する必要があります。</br>
+以下のリンクに開いて、</br>
+  TavilyAI エージェント： https://auth.tavily.com/u/signup/identifier?state=hKFo2SB5TE1IdFpjQlZiQU15d1lzdFBWeTNZRFA4YVpjenZYWqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIHJxeS0xWFN4WkNRY2ZvQ0hyTm1tZzJHbGcyNHhla3pto2NpZNkgUlJJQXZ2WE5GeHBmVFdJb3pYMW1YcUxueVVtWVNUclE</br>
+  OpenApi: https://platform.openai.com/docs/overview</br>
+  ※TavilyAIエージェントはアカウントを作成して、無料盤を使って良い。（注意：一か月で1000クレジット無料）</br>
+　※OpenAIは無料Apiキーで足りない可能性があり、$5のキーを買って良い。</br>
 2. Mavenがインストールされていることを確認してください。
 3. Java 21がインストールされていることを確認してください。
 4. プロジェクトの依存関係が正しく解決されていることを確認してください。
