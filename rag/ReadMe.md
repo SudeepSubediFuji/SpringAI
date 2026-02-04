@@ -8,20 +8,20 @@
 3. 左上の「＋」ボタンをクリックをして、「新規構成を追加」を表示されます。
    そこからアプリケーションを選んでください。
 4. 以下のように設定
-   名前:　MultiChatClientApplication
-   ビルドと実行：
-   Java盤：21
-   メインクラス：com.example.rag.RagApplication
-   環境変数：OPENAI_API_KEY=自分のOpenAIのAPIキー
-　　　　　　　TAVILY_API_KEY＝自分のTavilyAIエージェントのAPIキー
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　を入力してください
-　　※入力文式：OPENAI_API_KEY=Apiキー；TAVILY_API_KEY=Apiキー;
+   名前:　MultiChatClientApplication</br>
+   ビルドと実行：</br>
+   Java盤：21</br>
+   メインクラス：com.example.rag.RagApplication</br>
+   環境変数：OPENAI_API_KEY=自分のOpenAIのAPIキー</br>
+　　　　　　　TAVILY_API_KEY＝自分のTavilyAIエージェントのAPIキー</br>
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　を入力してください</br>
+※入力文式：``` OPENAI_API_KEY=Apiキー；TAVILY_API_KEY=Apiキー; ```</br>
    使用するモジュール：SpringAiVector
+
 5. 適用をクリックをして、OKをクリックをしてください。
 6. Intellij Ideaの右上の実行ボタンをクリックをして、アプリケーションを実行してください。
    例：
    ![img.png](img.png)
-7. 
 
 ## 注意点：
 1. OpenAIのAPIキーとTavilyのApiキーを取得して、環境変数に設定する必要があります。
