@@ -1,7 +1,6 @@
 package com.example.rag.controller;
 
 import com.example.rag.Tools.DateTimeTool;
-import com.example.rag.Tools.DateTimeTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +12,17 @@ import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 @RequestMapping
 public class TimeController {
     private final ChatClient chatClient;
-    public TimeController(@Qualifier("TimeChatClient") ChatClient chatClient){
-        this.chatClient=chatClient;
+
+    public TimeController(@Qualifier("TimeChatClient") ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     @GetMapping("/time")
     public ResponseEntity<String> getTime(@RequestHeader("username") String username,
-    @RequestParam("message") String message){
+                                          @RequestParam("message") String message) {
         String answer = chatClient.prompt()
                 .user(message)
-                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID,username))
+                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID, username))
                 .tools(new DateTimeTool())
                 .call().content();
         return ResponseEntity.ok(answer);
@@ -30,10 +30,10 @@ public class TimeController {
 
     @GetMapping("/time2")
     public ResponseEntity<String> getLocaleTime(@RequestHeader("username") String username,
-                                          @RequestParam("message") String message){
+                                                @RequestParam("message") String message) {
         String answer = chatClient.prompt()
                 .user(message)
-                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID,username))
+                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID, username))
 //                .tools(new DateTimeTools())
                 .call().content();
         return ResponseEntity.ok(answer);

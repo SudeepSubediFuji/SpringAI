@@ -3,7 +3,6 @@ package com.example.rag.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.naming.Name;
 import java.time.LocalDateTime;
 
 @Entity

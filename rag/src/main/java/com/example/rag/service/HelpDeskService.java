@@ -21,7 +21,7 @@ public class HelpDeskService {
 
     // HelpDeskTicket entity
     // ticketRequest is a model which will record the issues.
-    public HelpDeskTicket createTicket(TicketRequest ticketRequest, String username){
+    public HelpDeskTicket createTicket(TicketRequest ticketRequest, String username) {
         HelpDeskTicket helpDeskTicket = HelpDeskTicket.builder()
                 .issue(ticketRequest.issue())
                 .username(username)
@@ -36,7 +36,7 @@ public class HelpDeskService {
     }
 
     // Service created here will be used by repository
-    public List<HelpDeskTicket> getTicketByUsername(String username){
+    public List<HelpDeskTicket> getTicketByUsername(String username) {
         // Here we will invoke the findByUser method of helpDeskRepository and output the list of HelpDeskTicket entity data
         return helpDeskRepository.findByUsername(username);
     }

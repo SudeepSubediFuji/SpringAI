@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.util.List;
 
 @EnableJpaRepositories
-public interface HelpDeskRepository extends JpaRepository<HelpDeskTicket,Long> {
+public interface HelpDeskRepository extends JpaRepository<HelpDeskTicket, Long> {
     List<HelpDeskTicket> findByUsername(String username);
 }

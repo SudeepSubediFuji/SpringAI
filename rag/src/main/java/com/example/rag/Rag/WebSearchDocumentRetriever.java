@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class WebSearchDocumentRetriever implements DocumentRetriever {
 
-    Logger logger =  Logger.getLogger(WebSearchDocumentRetriever.class.getName());
+    Logger logger = Logger.getLogger(WebSearchDocumentRetriever.class.getName());
 
     private static final String TAVILY_API_KEY = "TAVILY_API_KEY";
     private static final String TAVILY_BASE_URL = "https://api.tavily.com/search";
@@ -24,45 +24,45 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
     private final int resultLimit;
     private final RestClient restClient;
 
-    public WebSearchDocumentRetriever(RestClient.Builder restClientBuilder, int resultLimit){
-        Assert.notNull(restClientBuilder,"Client builder cannot be null");
+    public WebSearchDocumentRetriever(RestClient.Builder restClientBuilder, int resultLimit) {
+        Assert.notNull(restClientBuilder, "Client builder cannot be null");
         String API_KEY = System.getenv(TAVILY_API_KEY);
-        Assert.hasText(API_KEY,"Environment variable "+ TAVILY_API_KEY+ " must be set.");
+        Assert.hasText(API_KEY, "Environment variable " + TAVILY_API_KEY + " must be set.");
         this.restClient = restClientBuilder
                 .baseUrl(TAVILY_BASE_URL)
-                .defaultHeader(HttpHeaders.AUTHORIZATION,"Bearer "+ API_KEY)
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + API_KEY)
                 .build();
-        if (resultLimit<=0){
+        if (resultLimit <= 0) {
             throw new IllegalArgumentException("resultLimit must be greater than o");
         }
-        this.resultLimit= resultLimit;
+        this.resultLimit = resultLimit;
     }
 
     @Override
     public List<Document> retrieve(Query query) {
         logger.info("Processing Query: {}" + query.text());
-        Assert.notNull(query,"Query cannot be null.");
+        Assert.notNull(query, "Query cannot be null.");
 
         String q = query.text();
-        Assert.hasText(q,"Query.text() cannot be null.");
+        Assert.hasText(q, "Query.text() cannot be null.");
         //.body(TavilyResponsePayload.class) --> here this method will typeCast the responsePayload
         TavilyResponsePayload responsePayload = restClient.post()
-                .body(new TavilyRequestPayload(q,"advanced",resultLimit))
+                .body(new TavilyRequestPayload(q, "advanced", resultLimit))
                 .retrieve()
                 .body(TavilyResponsePayload.class);
 
-        if (responsePayload==null || CollectionUtils.isEmpty(responsePayload.results())){
+        if (responsePayload == null || CollectionUtils.isEmpty(responsePayload.results())) {
             return List.of();
         }
         List<Document> documents = new ArrayList<>(responsePayload.results.size());
 
-        for (TavilyResponsePayload.Hit hit : responsePayload.results()){
+        for (TavilyResponsePayload.Hit hit : responsePayload.results()) {
             // Map each Tavily hit into a Spring AI Document with metadata and score.
             Document doc = Document.builder()
                     .text(hit.content())
                     .score(hit.score())
-                    .metadata("title",hit.title)
-                    .metadata("url",hit.url)
+                    .metadata("title", hit.title)
+                    .metadata("url", hit.url)
                     .build();
             documents.add(doc);
         }
@@ -70,10 +70,12 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
     }
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-    record TavilyRequestPayload(String query,String searchDepth, int maxResult){}
+    record TavilyRequestPayload(String query, String searchDepth, int maxResult) {
+    }
 
-    record TavilyResponsePayload(List<Hit> results){
-        record Hit(String title, String url, String content, Double score){}
+    record TavilyResponsePayload(List<Hit> results) {
+        record Hit(String title, String url, String content, Double score) {
+        }
     }
 
     public static Builder builder() {
@@ -85,7 +87,8 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
         private RestClient.Builder restClientBuilder;
         private int resultLimit = DEFAULT_RESULT_LIMIT;
 
-        private Builder() {}
+        private Builder() {
+        }
 
 
         public Builder restClientBuilder(RestClient.Builder restClientBuilder) {
@@ -93,16 +96,16 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
             return this;
         }
 
-        public Builder maxResults(int maxResults){
-            if (maxResults<=0){
+        public Builder maxResults(int maxResults) {
+            if (maxResults <= 0) {
                 throw new IllegalArgumentException("maxResults is not set. ");
             }
-            this.resultLimit=maxResults;
+            this.resultLimit = maxResults;
             return this;
         }
 
         public WebSearchDocumentRetriever build() {
-            return new WebSearchDocumentRetriever(restClientBuilder,resultLimit);
+            return new WebSearchDocumentRetriever(restClientBuilder, resultLimit);
         }
     }
 

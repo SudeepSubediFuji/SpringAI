@@ -21,20 +21,20 @@ import org.springframework.context.annotation.Configuration;
 public class ChatClientConfig {
 
     @Bean
-    ChatMemory chatMemory(JdbcChatMemoryRepository jdbcChatMemoryRepository){
+    ChatMemory chatMemory(JdbcChatMemoryRepository jdbcChatMemoryRepository) {
         return MessageWindowChatMemory.builder().maxMessages(10).chatMemoryRepository(jdbcChatMemoryRepository).build();
     }
 
     // Only defineing the chatClient as following as previously circular dependency and other error are prune to grow
     @Bean("ChatMemory")
-    public ChatClient chatClient(ChatClient.Builder chatClientBuilder, RetrievalAugmentationAdvisor retrievalAugmentationAdvisor,ChatMemory chatMemory){
+    public ChatClient chatClient(ChatClient.Builder chatClientBuilder, RetrievalAugmentationAdvisor retrievalAugmentationAdvisor, ChatMemory chatMemory) {
         ChatOptions chatOptions = ChatOptions.builder().model("gpt-5-mini").build();
         Advisor chatmemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
-        return chatClientBuilder.defaultOptions(chatOptions).defaultAdvisors(new SimpleLoggerAdvisor(),new TokenUsageAuditAdvisor(),retrievalAugmentationAdvisor,chatmemoryAdvisor).build();
+        return chatClientBuilder.defaultOptions(chatOptions).defaultAdvisors(new SimpleLoggerAdvisor(), new TokenUsageAuditAdvisor(), retrievalAugmentationAdvisor, chatmemoryAdvisor).build();
     }
 
     @Bean
-    public RetrievalAugmentationAdvisor retrievalAugmentationAdvisor(VectorStore vectorStore, ChatClient.Builder chatClientBuilder){
+    public RetrievalAugmentationAdvisor retrievalAugmentationAdvisor(VectorStore vectorStore, ChatClient.Builder chatClientBuilder) {
         return RetrievalAugmentationAdvisor.builder()
                 .documentRetriever(VectorStoreDocumentRetriever.builder().vectorStore(vectorStore).topK(3).similarityThreshold(0.5).build())
                 .queryTransformers(TranslationQueryTransformer.builder().chatClientBuilder(chatClientBuilder.clone()).targetLanguage("english").build())

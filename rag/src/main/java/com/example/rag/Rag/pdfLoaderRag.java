@@ -19,12 +19,13 @@ public class pdfLoaderRag {
     Resource hrPolicy;
 
     private final VectorStore vectorStore;
-    public pdfLoaderRag(VectorStore vectorStore){
+
+    public pdfLoaderRag(VectorStore vectorStore) {
         this.vectorStore = vectorStore;
     }
 
     @PostConstruct
-    public void policyLoader(){
+    public void policyLoader() {
         TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(hrPolicy);
         List<Document> docs = tikaDocumentReader.get();
         TextSplitter textSplitter = TokenTextSplitter.builder().withChunkSize(200).withMaxNumChunks(400).build();

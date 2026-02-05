@@ -19,24 +19,24 @@ import java.util.List;
 @Configuration
 public class WebSearchRagConfig {
 
-        @Bean("webSearchRagClient")
+    @Bean("webSearchRagClient")
     public ChatClient chatClient(ChatClient.Builder chatClientBuilder,
                                  RestClient.Builder restClientBuilder,
-                                 ChatMemory chatMemory){
-       QueryTransformer queryTransformer = TranslationQueryTransformer.builder()
-               .chatClientBuilder(chatClientBuilder.clone())
-               .targetLanguage("english")
-               .build();
+                                 ChatMemory chatMemory) {
+        QueryTransformer queryTransformer = TranslationQueryTransformer.builder()
+                .chatClientBuilder(chatClientBuilder.clone())
+                .targetLanguage("english")
+                .build();
 
-       var webSearchRagAdvisor =
-               RetrievalAugmentationAdvisor.builder()
-               .documentRetriever(WebSearchDocumentRetriever.builder().restClientBuilder(restClientBuilder).maxResults(5).build())
-               .queryTransformers(queryTransformer)
-               .build();
-       Advisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
+        var webSearchRagAdvisor =
+                RetrievalAugmentationAdvisor.builder()
+                        .documentRetriever(WebSearchDocumentRetriever.builder().restClientBuilder(restClientBuilder).maxResults(5).build())
+                        .queryTransformers(queryTransformer)
+                        .build();
+        Advisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
 
         return chatClientBuilder
-                .defaultAdvisors(List.of(new SimpleLoggerAdvisor(),webSearchRagAdvisor,new TokenUsageAuditAdvisor(),chatMemoryAdvisor))
+                .defaultAdvisors(List.of(new SimpleLoggerAdvisor(), webSearchRagAdvisor, new TokenUsageAuditAdvisor(), chatMemoryAdvisor))
                 .build();
     }
 }
