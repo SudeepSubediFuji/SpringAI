@@ -1,5 +1,6 @@
 package com.example.rag.config;
 
+import com.example.rag.Rag.PIIMaskingDocumentPostProcessor;
 import com.example.rag.advisors.TokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -25,7 +26,7 @@ public class ChatClientConfig {
     }
 
     // Only defineing the chatClient as following as previously circular dependency and other error are prune to grow
-    @Bean
+    @Bean("ChatMemory")
     public ChatClient chatClient(ChatClient.Builder chatClientBuilder, RetrievalAugmentationAdvisor retrievalAugmentationAdvisor,ChatMemory chatMemory){
         ChatOptions chatOptions = ChatOptions.builder().model("gpt-5-mini").build();
         Advisor chatmemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
@@ -37,6 +38,10 @@ public class ChatClientConfig {
         return RetrievalAugmentationAdvisor.builder()
                 .documentRetriever(VectorStoreDocumentRetriever.builder().vectorStore(vectorStore).topK(3).similarityThreshold(0.5).build())
                 .queryTransformers(TranslationQueryTransformer.builder().chatClientBuilder(chatClientBuilder.clone()).targetLanguage("english").build())
+                // .documentPostProcessors() -> we give a method as parameter to the documentPostProcessors , which will define what should be used or not from the documents(Eazybytes_HR_policy.pdf)
+                // Such as hiding or masking the credential data such as the email or contact (things that we wanna hide from normal users)
+                // This helps to edit the info wanna provide to the client using Post retrieval process of RAG.
+                .documentPostProcessors(PIIMaskingDocumentPostProcessor.builder())
                 .build();
     }
 

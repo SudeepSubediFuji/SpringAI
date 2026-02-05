@@ -17,7 +17,7 @@ public class RagController {
     private final VectorStore vectorStore;
     private final ChatClient webSearchRagClient;
 
-    public RagController(ChatClient chatClient,
+    public RagController(@Qualifier("ChatMemory") ChatClient chatClient,
                          @Qualifier("webSearchRagClient") ChatClient webSearchRagClient,
                          VectorStore vectorStore){
         this.chatClient=chatClient;
