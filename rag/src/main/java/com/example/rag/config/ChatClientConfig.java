@@ -13,6 +13,8 @@ import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.rag.advisor.RetrievalAugmentationAdvisor;
 import org.springframework.ai.rag.preretrieval.query.transformation.TranslationQueryTransformer;
 import org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever;
+import org.springframework.ai.tool.execution.DefaultToolExecutionExceptionProcessor;
+import org.springframework.ai.tool.execution.ToolExecutionExceptionProcessor;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,5 +46,9 @@ public class ChatClientConfig {
                 .documentPostProcessors(PIIMaskingDocumentPostProcessor.builder())
                 .build();
     }
+//    @Bean
+//    ToolExecutionExceptionProcessor toolExecutionExceptionProcessor(){
+//        return  new DefaultToolExecutionExceptionProcessor(true);
+//    }
 
 }

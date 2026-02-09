@@ -8,6 +8,8 @@ import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.prompt.ChatOptions;
+import org.springframework.ai.tool.execution.DefaultToolExecutionExceptionProcessor;
+import org.springframework.ai.tool.execution.ToolExecutionExceptionProcessor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,9 +30,18 @@ public class HelpDeskConfig {
         return chatClientBuilder
                 .defaultOptions(chatOptions)
                 .defaultSystem(HelpDeskPrompt)
-                .defaultTools(helpDeskTicketTools)
+//                .defaultTools(helpDeskTicketTools)
                 .defaultAdvisors(new SimpleLoggerAdvisor(), new TokenUsageAuditAdvisor(), chatmemoryAdvisor)
                 .build();
+    }
+
+    // Using the Ai to create ticket also has some issues that is if the error during processing is occurred
+    // than the Ai will not display exact issue to the client side and only will say there is error
+    // , to tackle that issue we will be needing to create separate ToolExecutionProcessor and set the DefaultToolExecutionExceptionProcessor behaviour to true
+
+    @Bean
+    ToolExecutionExceptionProcessor toolExecutionExceptionProcessor(){
+        return  new DefaultToolExecutionExceptionProcessor(true);
     }
 
 }

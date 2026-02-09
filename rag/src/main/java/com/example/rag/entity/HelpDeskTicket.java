@@ -2,6 +2,7 @@ package com.example.rag.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +21,7 @@ public class HelpDeskTicket {
     private String username;
     private String issue;
     private String status;
+    @CreatedDate
     private LocalDateTime created_at;
     private LocalDateTime eta;
 }
