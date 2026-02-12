@@ -1,0 +1,9 @@
+spring:
+  ai:
+    mcp:
+      client:
+        sse:
+          connections:
+            filesystem:
+              # Use the service name from compose.yml, NOT localhost
+              url: http://mcp-filesystem:8080/sse

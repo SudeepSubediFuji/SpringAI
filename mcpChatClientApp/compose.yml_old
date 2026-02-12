@@ -1,0 +1,39 @@
+## Tried to create a Docker containeer to hold the filesystems server(MCP server)
+##  and a Docker container where our whole program resides(Client)
+## This process failed as error SES
+services:
+  mcp-filesystem:
+    image: node:20-slim
+    container_name: mcp-fs-server
+    working_dir: /app
+    # We force Node to run the SSE transport and bind to all interfaces (0.0.0.0)
+    command: >
+      npx -y @modelcontextprotocol/server-filesystem /app/data --transport sse
+#      Here the above command fails and there is no handshake between the sse server and client
+    environment:
+      - PORT=8080
+    volumes:
+      - C:/Users/SudeepFuji/Study/Java/SpringAI/mcp:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/sse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mcp-net
+
+  mcp-app:
+    build: .
+    container_name: mcp-client-app
+    depends_on:
+      mcp-filesystem:
+        condition: service_healthy # This is the magic fix
+    networks:
+      - mcp-net
+    environment:
+      - SPRING_AI_MCP_CLIENT_SSE_CONNECTIONS_FILESYSTEM_URL=http://mcp-filesystem:8080/sse
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+networks:
+  mcp-net:
+    driver: bridge
