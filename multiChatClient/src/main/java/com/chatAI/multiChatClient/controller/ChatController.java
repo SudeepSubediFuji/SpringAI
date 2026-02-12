@@ -2,6 +2,7 @@ package com.chatAI.multiChatClient.controller;
 
 import com.chatAI.multiChatClient.service.TokenService;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class ChatController {
     }
 
     @GetMapping("/chat")
-    public String chat(@RequestParam String userInput) {
+    public ChatResponseMetadata chat(@RequestParam String userInput) {
         // Calculate dynamic max tokens
         int dynamicMax = tokenService.calculateMaxTokens(userInput, 128000);
         ChatOptions chatOptions = ChatOptions.builder()
@@ -34,7 +35,6 @@ public class ChatController {
                 .defaultOptions(chatOptions)
                 .build()
                 .prompt(userInput)
-                .call()
-                .content();
+                .call().responseEntity(ChatController.class.getClass()).getResponse().getMetadata();
     }
 }
