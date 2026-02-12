@@ -22,7 +22,7 @@
         "mcp/github"
       ],
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "自分のアクセスキーを入力ください。"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
       }
     }
   }
