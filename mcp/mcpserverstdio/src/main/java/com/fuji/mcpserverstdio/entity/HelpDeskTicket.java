@@ -1,4 +1,4 @@
-package com.fuji.mcpserverstdio.entity;
+package com.fuji.mcpserverRemote.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

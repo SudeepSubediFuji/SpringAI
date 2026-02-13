@@ -1,4 +1,4 @@
-package com.fuji.mcpserverstdio;
+package com.fuji.mcpserverRemote;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

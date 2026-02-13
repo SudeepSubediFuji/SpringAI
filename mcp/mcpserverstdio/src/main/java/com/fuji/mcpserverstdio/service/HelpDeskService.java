@@ -1,8 +1,8 @@
-package com.fuji.mcpserverstdio.service;
+package com.fuji.mcpserverRemote.service;
 
-import com.fuji.mcpserverstdio.entity.HelpDeskTicket;
-import com.fuji.mcpserverstdio.model.TicketRequest;
-import com.fuji.mcpserverstdio.repository.HelpDeskRepository;
+import com.fuji.mcpserverRemote.entity.HelpDeskTicket;
+import com.fuji.mcpserverRemote.model.TicketRequest;
+import com.fuji.mcpserverRemote.repository.HelpDeskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

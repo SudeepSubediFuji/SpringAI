@@ -1,4 +1,4 @@
-## MCP プロジェクト
+## リモートMCPサーバ プロジェクト
 
 ## 実行ビルド構成の設定するため、Intellij　Ideaで、以下の設定を行ってください。
 1. Intellij IdeaでCloneされたフォルダを開く
@@ -10,7 +10,7 @@
    名前:　McpserverstdioApplication
    ビルドと実行：
    Java盤：21
-   メインクラス：com.fuji.mcpserverstdio.McpserverstdioApplication
+   メインクラス：com.fuji.mcpserverRemote.McpserverstdioApplication
    環境変数：OPENAI_API_KEY=あなたのOpenAIのAPIキーを入力してください
    使用するモジュール：McpserverstdioApplication
 5. 適用をクリックをして、OKをクリックをしてください。

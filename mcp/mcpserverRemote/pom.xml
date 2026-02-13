@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fuji</groupId>
-	<artifactId>mcpserverstdio</artifactId>
+	<artifactId>mcpserverRemote</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mcpserverstdio</name>
-	<description>Demo project for Spring Boot</description>
+	<name>mcpserverRemote</name>
+	<description>Demo project for MCP application for remote invocation</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -41,7 +41,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-starter-mcp-server</artifactId>
+			<artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
 		</dependency>
 
 		<dependency>

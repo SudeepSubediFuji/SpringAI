@@ -1,5 +1,5 @@
-package com.fuji.mcpserverstdio.config;
-import com.fuji.mcpserverstdio.Tools.HelpDeskTool;
+package com.fuji.mcpserverRemote.config;
+import com.fuji.mcpserverRemote.Tools.HelpDeskTool;
 import org.springframework.ai.support.ToolCallbacks;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.context.annotation.Bean;

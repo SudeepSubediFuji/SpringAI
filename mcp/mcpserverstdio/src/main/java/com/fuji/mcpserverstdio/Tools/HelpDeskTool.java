@@ -1,7 +1,7 @@
-package com.fuji.mcpserverstdio.Tools;
-import com.fuji.mcpserverstdio.entity.HelpDeskTicket;
-import com.fuji.mcpserverstdio.model.TicketRequest;
-import com.fuji.mcpserverstdio.service.HelpDeskService;
+package com.fuji.mcpserverRemote.Tools;
+import com.fuji.mcpserverRemote.entity.HelpDeskTicket;
+import com.fuji.mcpserverRemote.model.TicketRequest;
+import com.fuji.mcpserverRemote.service.HelpDeskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.model.ToolContext;
 import org.springframework.ai.tool.annotation.Tool;

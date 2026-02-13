@@ -1,6 +1,6 @@
-package com.fuji.mcpserverstdio.repository;
+package com.fuji.mcpserverRemote.repository;
 
-import com.fuji.mcpserverstdio.entity.HelpDeskTicket;
+import com.fuji.mcpserverRemote.entity.HelpDeskTicket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
