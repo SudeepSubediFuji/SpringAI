@@ -72,9 +72,6 @@ spring.ai.mcp.client.enabled=true
 ```
 参照プロジェクト：https://github.com/SudeepSubediFuji/SpringAI/tree/main/mcp/mcpserverstdio
 
-
-
-
 参照：
 * https://modelcontextprotocol.io/docs/getting-started/intro
 * https://docs.spring.io/spring-ai/reference/api/mcp/mcp-overview.html
