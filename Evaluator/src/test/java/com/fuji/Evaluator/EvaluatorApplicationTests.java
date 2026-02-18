@@ -8,14 +8,11 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.evaluation.FactCheckingEvaluator;
 import org.springframework.ai.chat.evaluation.RelevancyEvaluator;
-import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.evaluation.EvaluationRequest;
 import org.springframework.ai.evaluation.EvaluationResponse;
-import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
@@ -99,7 +96,7 @@ class EvaluatorApplicationTests {
         // Ai response from the prompt method of WebController
         String aiResponse = webController.prompt(question);
 
-        EvaluationRequest evaluationRequest = new EvaluationRequest(question,List.of(groundTruthDocument), aiResponse);
+        EvaluationRequest evaluationRequest = new EvaluationRequest(question, List.of(groundTruthDocument), aiResponse);
         EvaluationResponse evaluationResponse = relevancyEvaluator.evaluate(evaluationRequest);
 
         Assertions.assertAll(() -> assertThat(aiResponse).isNotBlank(),
@@ -171,7 +168,7 @@ class EvaluatorApplicationTests {
         String aiResponse = webController.chat(question);
         logger.info("AI response: " + aiResponse);
         // Calling DataLoader
-        logger.info("Dataloader checker:"+ dataLoader.getJapanDoc());
+        logger.info("Dataloader checker:" + dataLoader.getJapanDoc());
         EvaluationRequest evaluationRequest = new EvaluationRequest(question, dataLoader.getJapanDoc(), aiResponse);
         logger.info("Evaluation getResponseContext :" + evaluationRequest.getResponseContent() + "Evaluation getUserText :" + evaluationRequest.getUserText());
         EvaluationResponse evaluationResponse = factCheckingEvaluator.evaluate(evaluationRequest);
@@ -198,7 +195,7 @@ class EvaluatorApplicationTests {
         String hrpolicy = HrPolicy.getContentAsString(StandardCharsets.UTF_8);
 
         // Calling DataLoader
-        logger.info("Dataloader checker:"+ hrpolicy);
+        logger.info("Dataloader checker:" + hrpolicy);
         EvaluationRequest evaluationRequest = new EvaluationRequest(question, List.of(new Document(hrpolicy)), aiResponse);
         logger.info("Evaluation getResponseContext :" + evaluationRequest.getResponseContent() + "Evaluation getUserText :" + evaluationRequest.getUserText());
         EvaluationResponse evaluationResponse = factCheckingEvaluator.evaluate(evaluationRequest);
@@ -211,7 +208,6 @@ class EvaluatorApplicationTests {
                         .isTrue()
         );
     }
-
 
 
 }
