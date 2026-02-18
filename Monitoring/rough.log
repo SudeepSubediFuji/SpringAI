@@ -1,0 +1,79 @@
+ "results" : [ {
+    "output" : {
+      "messageType" : "ASSISTANT",
+      "metadata" : {
+        "role" : "ASSISTANT",
+        "messageType" : "ASSISTANT",
+        "finishReason" : "STOP",
+        "refusal" : "",
+        "index" : 0,
+        "annotations" : [ ],
+        "id" : "chatcmpl-D6BCZEaAFGUS9XU2E67IjeTwy3oc4"
+      },
+      "toolCalls" : [ ],
+      "media" : [ ],
+      "text" : "I won’t create a duplicate — there’s already an open UI issue ticket.\n\nExisting ticket:\n- Ticket ID: 8\n- Summary: UI issue (created for username: sudh)\n- Status: Open\n\nPlease choose one so I can proceed:\n\n1) Update Ticket 8 now with this new info (I can add: App = \"Aile\", Summary = \"GUI issue in Aile\"). If you pick this, optionally provide: steps to reproduce, expected vs actual behavior, browser/OS, screenshots or error text, severity (Low/Medium/High), and preferred contact method. Reply with the details you want added or say “Update with Aile” to have me add the app and short summary now.\n\n2) Create a new ticket because this is a different GUI problem — if so, briefly state how it’s different from Ticket 8 (one-sentence), and I’ll create a new ticket.\n\n3) Escalate Ticket 8 — reply “Escalate” and give a phone number and best time to call.\n\nWhich option do you want?"
+    },
+    "metadata" : {
+      "finishReason" : "STOP",
+      "contentFilters" : [ ],
+      "empty" : true
+    }
+  } ],
+  "result" : {
+    "output" : {
+      "messageType" : "ASSISTANT",
+      "metadata" : {
+        "role" : "ASSISTANT",
+        "messageType" : "ASSISTANT",
+        "finishReason" : "STOP",
+        "refusal" : "",
+        "index" : 0,
+        "annotations" : [ ],
+        "id" : "chatcmpl-D6BCZEaAFGUS9XU2E67IjeTwy3oc4"
+      },
+      "toolCalls" : [ ],
+      "media" : [ ],
+      "text" : "I won’t create a duplicate — there’s already an open UI issue ticket.\n\nExisting ticket:\n- Ticket ID: 8\n- Summary: UI issue (created for username: sudh)\n- Status: Open\n\nPlease choose one so I can proceed:\n\n1) Update Ticket 8 now with this new info (I can add: App = \"Aile\", Summary = \"GUI issue in Aile\"). If you pick this, optionally provide: steps to reproduce, expected vs actual behavior, browser/OS, screenshots or error text, severity (Low/Medium/High), and preferred contact method. Reply with the details you want added or say “Update with Aile” to have me add the app and short summary now.\n\n2) Create a new ticket because this is a different GUI problem — if so, briefly state how it’s different from Ticket 8 (one-sentence), and I’ll create a new ticket.\n\n3) Escalate Ticket 8 — reply “Escalate” and give a phone number and best time to call.\n\nWhich option do you want?"
+    },
+    "metadata" : {
+      "finishReason" : "STOP",
+      "contentFilters" : [ ],
+      "empty" : true
+    }
+  },
+  "metadata" : {
+    "id" : "chatcmpl-D6BCZEaAFGUS9XU2E67IjeTwy3oc4",
+    "model" : "gpt-5-mini-2025-08-07",
+    "rateLimit" : {
+      "requestsLimit" : 500,
+      "requestsRemaining" : 499,
+      "tokensLimit" : 500000,
+      "tokensRemaining" : 498772,
+      "requestsReset" : 0.120000000,
+      "tokensReset" : 0.147000000
+    },
+    "usage" : {
+      "promptTokens" : 1284,
+      "completionTokens" : 1061,
+      "totalTokens" : 2345,
+      "nativeUsage" : {
+        "completion_tokens" : 1061,
+        "prompt_tokens" : 1284,
+        "total_tokens" : 2345,
+        "prompt_tokens_details" : {
+          "audio_tokens" : 0,
+          "cached_tokens" : 0
+        },
+        "completion_tokens_details" : {
+          "reasoning_tokens" : 832,
+          "accepted_prediction_tokens" : 0,
+          "audio_tokens" : 0,
+          "rejected_prediction_tokens" : 0
+        }
+      }
+    },
+    "promptMetadata" : [ ],
+    "empty" : false
+  }
+}
