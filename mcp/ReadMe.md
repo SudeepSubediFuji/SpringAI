@@ -30,7 +30,6 @@ Http ポストを使って、データを送ります。後はServer-Sent Events
 3. SES：
 Depricatedとサーバーからクライアントのストリングスの場合だけを使います。
 
-
 #### MCPインスペクター：
 MCPインスペクターはMCPサーバをテストとデバッグするため、使われています。
 コマンド：
@@ -45,7 +44,7 @@ MCPインスペクターは三つ法で接続することできます（タラ�
 #### GitHub MCP サーバ
 GitHub MCP サーバはGitHubのApiでファイル操作、レポジトリ管理、検索機能やなどなど操作するためのMCPサーバです。
 SpringアプリでGitHubMCPサーバの構成（application.propertiesやconf.json、後は、個人の細粒度トークン）されたら接続可能です。
-```
+```yaml
     "mcpServers":{
     "github": {
       "command": "docker",
@@ -64,7 +63,7 @@ SpringアプリでGitHubMCPサーバの構成（application.propertiesやconf.js
     }
 ```
 application.properties
-```
+```properties
 #GitHubMCPサーバ構成ファイルのパースを書く
 spring.ai.mcp.client.stdio.servers-configuration=classpath:mcp-servers.json
 #mcpクライアント
