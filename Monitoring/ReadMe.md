@@ -6,6 +6,7 @@
 * AI的なインサイト
 
 ### Actuator
+Actuator依存を使って、メトリクスを収集することできます。Springでは、可観測性機能を使いに当たって、Actuator依存を追加する重要です。
 #### 1.内部システムの色々ことを監視するに当たって、Springでは、actuator依存追加が必要です。
 ```xml
         <dependency>
@@ -79,7 +80,26 @@ Prometheusの依存追加して、動いたら自動的に色々なメトリク�
 そうしないとprometheusが見つからないです（監視）。
 Prometheusは情報収集するめに、最初はそのサービス、ツールやエンドポイントは1回でも動く必須です。
 
-### Kibana監視シーツ
-
-
-
+### Grafana監視シーツ
+Prometheusでは、GUIがありませんので、grafanaを構成するとGUIようなインターフェースで可観測性することが可能です。Prometheusを追加したら、その同じPrometheusをデータソースとして、grafanaを使われます（他データソース、監視ツール、などでも可能です。例えば：Sqlデータベース、Influxデータベース,elasticsearch(ローグ監視)）。
+KibanaはDockerで公開するため、以下のようにYamlファイルを追加してください。
+```yaml
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - spring-ai
+networks:
+  spring-ai: 
+    driver: bridge
+    
+volumes:
+  grafana-storage:
+```
+※volumesを設定したらGrafanaを再起動しても保存したデータがなくなりません。
+後は、prometheus（データソースとして）とGrafanaを接続して、作りたい場合、networksの情報は合わせないとだめです。
