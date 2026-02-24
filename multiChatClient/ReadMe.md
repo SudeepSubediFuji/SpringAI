@@ -1,39 +1,39 @@
-## 実行ビルド構成の設定するため、Intellij　Ideaで、以下の設定を行ってください。
-1. Intellij IdeaでCloneされたフォルダを開く
-2. Intellij　Ideaの左上のメニューにある「現在のファイル🔽」というボータンをクリックをして、 
-構成の編集ボタンを表示されたら、 そこをクリックをしたら実行/デバッグ構成がポップアップ が出ます。
-3. 左上の「＋」ボタンをクリックをして、「新規構成を追加」を表示されます。
-そこからアプリケーションを選んでください。
-4. 以下のように設定
-名前:　MultiChatClientApplication
-ビルドと実行：
-Java盤：21
-メインクラス：com.chatAI.multiChatClient.MultiChatClientApplication
-環境変数：OPENAI_API_KEY=あなたのOpenAIのAPIキーを入力してください
-使用するモジュール：SpringAiVector
-5. 適用をクリックをして、OKをクリックをしてください。
-6. Intellij Ideaの右上の実行ボタンをクリックをして、アプリケーションを実行してください。
-例：
-![img.png](img.png)
+## multiChatClient
 
-## 注意点：
-1. OpenAIのAPIキーを取得して、環境変数に設定する必要があります。
-2. Mavenがインストールされていることを確認してください。
-3. Java 21がインストールされていることを確認してください。
-4. プロジェクトの依存関係が正しく解決されていることを確認してください。
-5. OllamaのAPIを使用したい場合、Ollamaのインストールとモデルのダウンロードが必要です。(おすすめ：https://ollama.com/library/llama3.2:1b)
-※OllamaのAPIキーは不要です。Ollamaはローカルで動作します。移動しないとOllamaのAPIを使用できません。
+本プロジェクトでは、
+* チャットオプションの動作の確認
+  * Thinkingモードを有効化するのは、チャットオプションを初期化して、.enableThinking()メソッドを設定します。
+* 構造化出力を設定（ストリムレスポンスに変換、）
+* チャットメモリの動作
+* ユーザープロンプトテンプレートとシステムプロンプトテンプレートの作成方法
+* service作成処理（トークン使用化）
+* 複数チャットモデル操作
+* H2データベースのセットアップをして、データはテーブルに保存 </br>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;を行いました。
 
-本ポロジェクトを実行する方法：
-Git clone をして、そこのフォルダパスにタミヤで入って、以下のコマンドを実行してください。
-
+以下のセットアップはThinkingモードと設定と未有効化設定する手続きです。
+```java
+   private ChatClient ollamaChatClientTest;
+   public ollamaChatOptionsController(@Qualifier("ollamaChatClientTest") ChatClient ollamaChatClientTest) {
+       this.ollamaChatClientTest = ollamaChatClientTest;
+   }
+   
+    @GetMapping("/thinkMode" )
+    public String ollamaChatOptionsTest(@RequestParam("message") String message) {
+        OllamaChatOptions chatOptions = OllamaChatOptions.builder().model("deepseek-r1:8b").temperature(0.7).enableThinking().build();
+        return ollamaChatClientTest.prompt(message).options(chatOptions).advisors(new ollamaTokenUsageAuditAdvisor()).call().content();
+    }
+    @GetMapping("/fastMode" )
+    public String ollamaChatOptionsFastTest(@RequestParam("message") String message) {
+        OllamaChatOptions chatOptions = OllamaChatOptions.builder().model("gemma3:1b").temperature(0.7).disableThinking().build();
+        return ollamaChatClientTest.prompt(message).options(chatOptions).advisors(new ollamaTokenUsageAuditAdvisor()).call().content();
+    }
 ```
-# テストをビルドコマンド
-mvn clean install
-```
+※Thinkingモードを有効化するには、適切なモデルを選ぶ必要があります。上記では、deepseek-r1:8b AIモデルを設定するの理由はdeepseek-r1のThinkingモードは、軽くて、Thinkingモードのため、知識を練習されて、最近は最も人気です。（Thinkingモードは軽くて無料AIモデルはあまりない）
+※ gemma3:1bのFastモードも軽くて、ThinkingモードではなくFast・早めに答え・レスポンスをするのです。
 
-その後、Intellij Ideaで上記の設定を行い、アプリケーションを実行してください。
-以下のリンクから、Qdrantのダッシュボードにアクセスして、コレクションが作成されていることを確認できます。
-http://localhost:6333/dashboard#/collections
+参照資料：
+このプロジェクトでは、実施した操作について、説明は 既に以下のリンクに書いてあります。
+https://github.com/SudeepSubediFuji/SpringAI/blob/main/README.md
 
-
+https://github.com/SudeepSubediFuji/SpringAI/blob/main/openAI/ReadMe.md
