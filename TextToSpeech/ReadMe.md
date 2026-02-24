@@ -51,12 +51,11 @@ OpenAiAudioTranscriptionModel openAiAudioTranscriptionModel;
         return audioTranscriptResponse.getResult().getOutput();
     }
 ```
-※IVR → Interactive voice response
-
+※上記では、openAiAudioSpeechModelやopenAiAudioTranscriptionModelを使っていますがSpeechModel（現在：TextToSpeechModel）や
 参照書類：https://developers.openai.com/api/reference/resources/audio
 ## 画像生成
-
-
+SpringAIでは、画像生成を行うためはImageModelを使います。
+※OpenAiImageModelはImageModelを継承されています。
 簡単なImageModelの実装例：
 ```java
 ImageModel imageModel;
@@ -65,7 +64,12 @@ ImageModel imageModel;
         return imageModel.call(new ImagePrompt(message));
     }
 ```
-
+プロンプトを設定して、イメージモデルを呼び出して、結果はB64Jsonに取る方法合っても、取ったら空しが返却しません（まだ出来ない）。現在はイメージモデルだけを呼び出したら.getUrl()メソッドでイメージ生成が可能ですがURLに開いて、確認できます。
+```java
+imageModel.call(new ImagePrompt(message)).getResult().getOutput().getB64Json();
+```
+そういうことでImageModelは呼び出して、イメージオプションを初期化して、.getResponseFormat("b64_json")メソッドを設定して、イメージモデルをこーるするところで.getResult().getOutput().getB64Json()を設定するとb64Jsonでリターンできます。
+b64Jsonフォーマットよりbyte「」フォーマットに変換して（byte[] image = Base64.getDecoder().decode(b64Json)）、ファイルライターを使って、希望のパスに保存可能です。
 ImageOptionを含めて実装例：
 ```java
 ImageModel imageModel;
