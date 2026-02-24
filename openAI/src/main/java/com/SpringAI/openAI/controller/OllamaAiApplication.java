@@ -1,6 +1,7 @@
 package com.SpringAI.openAI.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,8 +13,8 @@ public class OllamaAiApplication {
 
     private final ChatClient chatClient;
 
-    public OllamaAiApplication(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build();
+    public OllamaAiApplication(@Qualifier("ollamaChatClientBuilder") ChatClient.Builder ollamaChatClientBuilder) {
+        this.chatClient = ollamaChatClientBuilder.build();
     }
 
 

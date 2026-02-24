@@ -1,37 +1,40 @@
-## 実行ビルド構成の設定するため、Intellij　Ideaで、以下の設定を行ってください。
-1. Intellij IdeaでCloneされたフォルダを開く
-2. Intellij　Ideaの左上のメニューにある「現在のファイル🔽」というボータンをクリックをして、 
-構成の編集ボタンを表示されたら、 そこをクリックをしたら実行/デバッグ構成がポップアップ が出ます。
-3. 左上の「＋」ボタンをクリックをして、「新規構成を追加」を表示されます。
-そこからアプリケーションを選んでください。
-4. 以下のように設定
-名前:　SpringAiVectorApplication
-ビルドと実行：
-Java盤：21
-メインクラス：com.example.springaivector.SpringAiVectorApplication
-環境変数：OPENAI_API_KEY=あなたのOpenAIのAPIキーを入力してください
-使用するモジュール：SpringAiVector
-5. 適用をクリックをして、OKをクリックをしてください。
-6. Intellij Ideaの右上の実行ボタンをクリックをして、アプリケーションを実行してください。
-例：
-![img.png](img.png)
+## openAI
 
-## 注意点：
-1. OpenAIのAPIキーを取得して、環境変数に設定する必要があります。
-2. Mavenがインストールされていることを確認してください。
-3. Java 21がインストールされていることを確認してください。
-4. プロジェクトの依存関係が正しく解決されていることを確認してください。
+本プロジェクトは複数チャットモデルを使って、実行する方法は記入しました。
 
-本ポロジェクトを実行する方法：
-Git clone をして、そこのフォルダパスにタミヤで入って、以下のコマンドを実行してください。
+以下の通りBeanを設定すれば、Qualifierにも特定なビルダーを設定すると特的なApiに公開可能です。
+```java
 
+   @Bean("openAiChatClientBuilder")
+    public ChatClient.Builder openAiChatClientBuilder(OpenAiChatModel chatModel){
+        return ChatClient.builder(chatModel);
+    }
+    @Bean("ollamaChatClientBuilder")
+    public ChatClient.Builder ollamaChatClientBuilder(OllamaChatModel chatModel){
+        return ChatClient.builder(chatModel);
+    }
 ```
-# テストをスキップしてビルド
-mvn clean install -DskipTests
+コントローラ：
+```java
+private final ChatClient openAIChatClient;
+private final ChatClient ollamaAIChatClient;
+
+public ChatClientController(@Qualifier("openAiChatClientBuilder") ChatClient.Builder openAiChatClientBuilder,
+                            @Qualifier("ollamaChatClientBuilder") ChatClient.Builder ollamaChatClientBuilder) {
+    this.openAIChatClient = openAiChatClientBuilder.build();
+    this.ollamaAIChatClient = ollamaChatClientBuilder.build();
+}
+@GetMapping("/openai-chat")
+public String chat(@RequestParam("message") String message) {
+    return openAIChatClient.prompt(message).call().content();
+}
+@GetMapping("/ollama-chat")
+public String chat(@RequestParam("message") String message) {
+    return ollamaAIChatClient.prompt(message).call().content();
+}
 ```
 
-その後、Intellij Ideaで上記の設定を行い、アプリケーションを実行してください。
-以下のリンクから、Qdrantのダッシュボードにアクセスして、コレクションが作成されていることを確認できます。
-http://localhost:6333/dashboard#/collections
-
+本プロジェクトでは、プロパティファイルは三つがあります。
+* application.properties　→　DockerでOllamaのみを立ち上げる。
+* application.properties_old　→　同様にOllama（Dockerで公開する）とOpenAI（キーを使う）。※構成設定.mdファイルに書いた通りで設定してください。
 

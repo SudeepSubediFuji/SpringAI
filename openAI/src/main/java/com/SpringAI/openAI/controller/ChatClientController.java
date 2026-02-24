@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatClientController {
     private final ChatClient chatClient;
 
-    public ChatClientController(@Qualifier("openAiChatClient") ChatClient chatClient){
-        this.chatClient = chatClient;
+    public ChatClientController(@Qualifier("openAiChatClientBuilder") ChatClient.Builder openAiChatClientBuilder){
+        this.chatClient = openAiChatClientBuilder.build();
     }
     @GetMapping("/chat")
     public String chat(@RequestParam("message") String message){

@@ -1,6 +1,7 @@
 package com.SpringAI.openAI.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +14,7 @@ public class DockerModelController {
     private final ChatClient chatClient;
 
     // The Builder is the best way to manage settings in Spring AI
-    public DockerModelController(ChatClient.Builder chatClientBuilder) {
+    public DockerModelController(@Qualifier("ollamaChatClientBuilder") ChatClient.Builder chatClientBuilder) {
         this.chatClient = chatClientBuilder.build();
     }
 
