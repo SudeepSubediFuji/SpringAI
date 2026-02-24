@@ -1,8 +1,0 @@
-spring.application.name=openAI
-logging.pattern.console=%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n
-#spring.ai.openai.api-key=${OPENAI_KEY}
-spring.ai.model.chat=ollama
-spring.ai.ollama.chat.options.model=gemma3:1b
-spring.ai.ollama.base-url=http://localhost:11434
-# 3. Optional: Recommended for Windows to prevent timeout during first load
-spring.ai.ollama.chat.options.timeout=60s
