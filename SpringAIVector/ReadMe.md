@@ -1,66 +1,62 @@
-## 実行ビルド構成の設定するため、Intellij Ideaで、以下の設定を行ってください。
-1. Intellij IdeaでCloneされたフォルダを開く
-2. Intellij　Ideaの左上のメニューにある「現在のファイル🔽」というボータンをクリックをして、 
-構成の編集ボタンを表示されたら、 そこをクリックをしたら実行/デバッグ構成がポップアップ が出ます。
-3. 左上の「＋」ボタンをクリックをして、「新規構成を追加」を表示されます。
-そこからアプリケーションを選んでください。
-4. 以下のように設定
-名前:　SpringAiVectorApplication
-ビルドと実行：
-Java盤：21
-メインクラス：com.example.springaivector.SpringAiVectorApplication
-環境変数：OPENAI_API_KEY=あなたのOpenAIのAPIキーを入力してください
-使用するモジュール：SpringAiVector
-5. 適用をクリックをして、OKをクリックをしてください。
-6. Intellij Ideaの右上の実行ボタンをクリックをして、アプリケーションを実行してください。
-例：
-![img.png](img.png)
+### SpringAiVector
+本プロジェクトではファイルを読み読んでベクタデータベースに保存されています。
 
-## Dockerの構成を設定するため、Docker Desktopで、以下の設定を行ってください。
-1. Docker Desktopに開いて、 左のサイドパネルの「AI」を押下して、
-   1. 「Enable Docker Model Runner」のチェックマークのところに☑チェックを押下して、
-   2. 「Enable host-side TCP support」のチェックマークのところにも☑チェックを押下して、
-   3. Portの下に12434を入力して、
-   4. 右下の「Apply」ボタンを押下してください。
-2. Docker Desktopに開いて、 左のサイドパネルの「General」を押下して、「Use the WSL2 based engine」のチェックボックスに☑チェックを押下してください。
+1. systemPrompt → promptTemplate/...
+2. userPrompt → ユーザー側のメッセージ
+3. コンテクスト　→　Documents/CompanyInfo.pdf : ベクタデータベースに保存
 
-![Docker構成.png](Docker%E6%A7%8B%E6%88%90.png)
+ベクタデータストアに書類を読み込み処理について、説明はragプロジェクトに書いております（本プロジェクトとRAGプロジェクトと）。
+参照資料：https://github.com/SudeepSubediFuji/SpringAI/tree/main/rag
 
-## 注意点：
-1. OpenAIのAPIキーを取得して、環境変数に設定する必要があります。
-2. Mavenがインストールされていることを確認してください。
-3. Java 21がインストールされていることを確認してください。
-4. プロジェクトの依存関係が正しく解決されていることを確認してください。
-5. 本プロジェクトを実行するため、裏でDockerを動かする必要があります。
+以下は普通のRAGの実装です：
+ファイルローダ：
+```java
+@Component
+public class HrPolicyLoader {
 
-本ポロジェクトを実行する方法：
-Git clone をして、そこのフォルダパスにタミヤで入って、以下のコマンドを実行してください。
+    private final VectorStore vectorStore;
+    Logger logger = Logger.getLogger(HrPolicyLoader.class.getName());
+    public HrPolicyLoader(VectorStore vectorStore){
+        this.vectorStore=vectorStore;
+    }
+    @Value("classpath:/Documents/CompanyInfo.pdf")
+    Resource CompanyInfo;
 
+    //プロジェクトとをコンパイルした時を実行
+    @PostConstruct
+    public void pdfLoader(){
+        TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(CompanyInfo);
+        List<Document> companyInfo = tikaDocumentReader.get();
+        TextSplitter textSplitter = TokenTextSplitter.builder().withMaxNumChunks(3000).withChunkSize(300).build();
+        // ベクタストアに保存
+        vectorStore.add(textSplitter.split(companyInfo));
+
+        logger.info("CompanyInfo got loaded to VectorStore");
+    }
+
+}
 ```
-# テストをスキップしてビルド
-mvn clean install -DskipTests
+Bean作成：
+```java
+
+ @Bean
+    RetrievalAugmentationAdvisor retrievalAugmentationAdvisor(VectorStore vectorStore){
+        return RetrievalAugmentationAdvisor.builder()
+                .documentRetriever(VectorStoreDocumentRetriever.builder()
+                        // ベクタストアをロード
+                        .vectorStore(vectorStore)
+                        //ベクタストア検索で、類似道のしきい値を0.5に設定
+                        .similarityThreshold(0.5)
+                        // 一番合う三つの結果
+                        .topK(3)
+                        .build()).build();
+    }
+
+    @Bean("OpenAiChatClient")
+    public ChatClient chatClient(OpenAiChatModel chatModel , RetrievalAugmentationAdvisor retrievalAugmentationAdvisor) {
+        ChatClient.Builder chatClient = ChatClient.builder(chatModel).defaultAdvisors(retrievalAugmentationAdvisor);
+        return chatClient.build();
+    }
+    
+    
 ```
-
-その後、Intellij Ideaで上記の設定を行い、アプリケーションを実行してください。
-以下のリンクから、Qdrantのダッシュボードにアクセスして、コレクションが作成されていることを確認できます。
-http://localhost:6333/dashboard#/collections
-
-## 課題・問題
-
-### Docker エラー
-時々DockerとDocker ComposeはSpringAiでランタイムで見つかれませんというエラーが表示されます。
-そういう時はDocker エクステンションをIntellijのマルケットプレスでインストールをして、ALT＋８を押下、
-そして、サービスを開きます。そこの左上のDockerの画像に緑色が表示されたらDockerはちゃんとに動いていることは確認できます。
-そうじゃない場合は、以下のようにしてください。
-1. Intellijの設定に開いて「ビルダー、実行、デプロイ」に開いて、
-2. そこからDockerに開いて、仮想マシンのパスとローカルパスを設定してください。
-3. 仮想マシンのパスはWslターミナルから入って、そこから自分のプロジェクトのパスを探してください。
-私の場合、
-仮想マシンのパス：docker-desktop:/mnt/host/c/Users/SudeepFuji/Study/Java/SpringAI/SpringAIVector
-ローカルパス：C:\Users\SudeepFuji\Study\Java\SpringAI\SpringAIVector
-![img2.png](img2.png)
-
-### OpenAI
-OpenAIのAPIキーは何では知りませんですが１月で使うことできなかったです。
-→もう一同APIキーを作成して設定すればいいです。
-
