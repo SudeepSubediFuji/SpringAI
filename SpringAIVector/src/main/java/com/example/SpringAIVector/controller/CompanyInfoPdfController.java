@@ -1,19 +1,16 @@
 package com.example.SpringAIVector.controller;
 
 //import com.example.SpringAIVector.advisor.tokenUsageAdvisor;
+
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
-import org.springframework.ai.document.Document;
-import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 
@@ -28,13 +25,13 @@ public class CompanyInfoPdfController {
     Resource CompanyInfoTemplate;
 
     public CompanyInfoPdfController(ChatClient.Builder builder, VectorStore vectorStore) {
-        this.chatClient=builder.defaultAdvisors(new SimpleLoggerAdvisor()).build();
-        this.vectorStore=vectorStore;
+        this.chatClient = builder.defaultAdvisors(new SimpleLoggerAdvisor()).build();
+        this.vectorStore = vectorStore;
     }
 
-    @GetMapping("/companyInfo" )
+    @GetMapping("/companyInfo")
     public ResponseEntity<String> fujiBot(@RequestHeader("username") String username,
-                                         @RequestParam("message") String message) {
+                                          @RequestParam("message") String message) {
         logger.info("RAG request received from user: " + username + " with message: " + message);
         // SearchRequestでは、どういう行動で検索するのかを設定します。
 //        SearchRequest similarDoc =
@@ -45,11 +42,11 @@ public class CompanyInfoPdfController {
 //       String similarText = similaritySearch.stream()
 //               .map(Document::getText)
 //               .collect(Collectors.joining(System.lineSeparator()));
-       String answer = chatClient.prompt(message)
-               .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID,username))
+        String answer = chatClient.prompt(message)
+                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID, username))
 //               .system(promptSystemSpec -> promptSystemSpec.text(CompanyInfoTemplate).param("companyInfo",similarText))
-               .user(message).call().content();
-       logger.info("RAG answer generated for user: " + answer);
-       return ResponseEntity.ok(answer);
+                .user(message).call().content();
+        logger.info("RAG answer generated for user: " + answer);
+        return ResponseEntity.ok(answer);
     }
 }

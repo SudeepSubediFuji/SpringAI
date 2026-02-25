@@ -31,21 +31,11 @@ public class AiConfig {
         return chatClient.build();
     }
 
-    @Bean("aiConfig")
-    public ChatClient chatClient(ChatClient.Builder chatClientBuilder,RetrievalAugmentationAdvisor  retrievalAugmentationAdvisor) {
+    @Bean("aiConfiguration")
+    public ChatClient chatClient2(ChatClient.Builder chatClientBuilder,RetrievalAugmentationAdvisor  retrievalAugmentationAdvisor) {
         return chatClientBuilder
                 .defaultAdvisors(retrievalAugmentationAdvisor).build();
     }
-
-    @Bean
-    RetrievalAugmentationAdvisor retrievalAugmentationAdvisor(VectorStore vectorStore,
-                                                              ChatClient.Builder chatClientBuilder) {
-        return RetrievalAugmentationAdvisor.builder()
-                .documentRetriever(VectorStoreDocumentRetriever.builder().vectorStore(vectorStore)
-                        .topK(3).similarityThreshold(0.5).build())
-                .build();
-    }
-
 
 //    @Bean
 //    public VectorStore vectorStore(EmbeddingModel embeddingModel, QdrantClient qdrantClient) {
