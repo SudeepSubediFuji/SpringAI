@@ -60,6 +60,7 @@ Eazybytes_HR_Policies.pdf　→　「Pointアドレス0→チャンク＿イン�
 
 ### ウェブ検索RAG
 
+以下はWebSearchDocumentRetrieverクラスです。TavilyAIエージェントと接続するための処理です。
 ```java
 
 public class WebSearchDocumentRetriever implements DocumentRetriever {
@@ -73,6 +74,7 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
     private final RestClient restClient;
 
     public WebSearchDocumentRetriever(RestClient.Builder restClientBuilder, int resultLimit) {
+        // Tavily AIエージェントのHttpロギング認証の準備
         Assert.notNull(restClientBuilder, "Client builder cannot be null");
         String API_KEY = System.getenv(TAVILY_API_KEY);
         Assert.hasText(API_KEY, "Environment variable " + TAVILY_API_KEY + " must be set.");
@@ -86,6 +88,7 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
         this.resultLimit = resultLimit;
     }
 
+    // Tavily実行処理
     @Override
     public List<Document> retrieve(Query query) {
         logger.info("Processing Query: {}" + query.text());
@@ -98,14 +101,14 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
                 .body(new TavilyRequestPayload(q, "advanced", resultLimit))
                 .retrieve()
                 .body(TavilyResponsePayload.class);
-
+        // payloadが空とnullの確認
         if (responsePayload == null || CollectionUtils.isEmpty(responsePayload.results())) {
             return List.of();
         }
+        // payloadが空とnullじゃない場合、Documentのサイズとして、保存
         List<Document> documents = new ArrayList<>(responsePayload.results.size());
-
         for (TavilyResponsePayload.Hit hit : responsePayload.results()) {
-            // Map each Tavily hit into a Spring AI Document with metadata and score.
+            // 各Tavilyヒット（ボータンを押すった時）をSpringAiDocumentとして、メタデータとスコア含めて保存
             Document doc = Document.builder()
                     .text(hit.content())
                     .score(hit.score())
@@ -117,15 +120,17 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
         return documents;
     }
 
+    // リクエストPayload定義
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     record TavilyRequestPayload(String query, String searchDepth, int maxResult) {
     }
-
+    // レスポンスPayload定義
     record TavilyResponsePayload(List<Hit> results) {
         record Hit(String title, String url, String content, Double score) {
         }
     }
 
+    //builderメソッド定義
     public static Builder builder() {
         return new Builder();
     }
@@ -159,4 +164,114 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
 
 }
 ```
-※上記クラスいきなり実装するのは不可雑ですが本当はVectorStoreDocumentRetrieverのクラスを下げして、そのような実装行っていいです。（VectorStoreDocumentRetriever implements DocumentRetriever）
+※上記クラスいきなり実装するのは不可雑ですが本当はVectorStoreDocumentRetrieverのクラスを下げして、そのような実装行っていいです。（参照クラス：VectorStoreDocumentRetriever implements DocumentRetriever）
+以下では、上のWebSearchDocumentRetrieverクラスを読んで.documentRetriever()メソッドのパラメータとして、アドバイザーを作って、ビルドします。しかし、実装は他の方法でも可能です。例えば関数やツールを作成して、実装。
+```java
+public ChatClient chatClient(ChatClient.Builder chatClientBuilder,
+                                 RestClient.Builder restClientBuilder,
+                                 ChatMemory chatMemory) {
+        QueryTransformer queryTransformer = TranslationQueryTransformer.builder()
+                .chatClientBuilder(chatClientBuilder.clone())
+                // レスポンス・答えの言語　→　日本語
+                .targetLanguage("japanese")
+                .build();
+
+        var webSearchRagAdvisor =
+                RetrievalAugmentationAdvisor.builder()
+                        .documentRetriever(WebSearchDocumentRetriever.builder().restClientBuilder(restClientBuilder).maxResults(5).build())
+                        .queryTransformers(queryTransformer)
+                        .build();
+        Advisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
+
+        return chatClientBuilder
+                .defaultAdvisors(List.of(new SimpleLoggerAdvisor(), webSearchRagAdvisor, new TokenUsageAuditAdvisor(), chatMemoryAdvisor))
+                .build();
+    }
+```
+
+### 現在の時間・日付取る方法
+LLMは知識カットオフされていますので、現在時間や日付はわからないです。LLMは現在時間や日付を分かるようにするため、ツールを作って、Systemやロカル時間を取られます。
+
+1. 日付ツール定義
+```java
+//日付ツール
+public class DateTimeTools {
+    Logger logger = Logger.getLogger(DateTimeTools.class.getName());
+    // 
+    @Tool(name = "getCurrentDateTime", description = "Current date and time provider tool")
+    String getCurrentDateTime(@ToolParam(
+            description = "Timezone") String timeZone) {
+        logger.info("LocaleDateTime: " + LocalDateTime.now(ZoneId.of(timeZone)).toString());
+        return LocalDateTime.now(ZoneId.of(timeZone)).toString();
+    }
+}
+```
+※timezone設定しなくてもいいですが、しないとは、日本・ロカルTimezoneとして、日付を取ります。Timezoneも設定すると他の所の時間も正しく上げます。
+2. ツール設定 
+</br>2\.1. Bean作成（デフォルトツールとして設定）
+```java
+@Configuration
+public class TimeChatClientConfig {
+    // 
+    @Bean("TimeChatClient")
+    public ChatClient chatClient(ChatClient.Builder chatClientBuilder,ChatMemory chatMemory){
+        ChatOptions chatOptions = ChatOptions.builder().model("gpt-5-mini").build();
+        Advisor chatmemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
+        return chatClientBuilder
+                .defaultOptions(chatOptions)
+                .defaultTools(new DateTimeTools())
+                .defaultAdvisors(new SimpleLoggerAdvisor(),new TokenUsageAuditAdvisor(),chatmemoryAdvisor)
+                .build();
+    }
+
+}
+```
+   ChatClientBuilderでは、defaultTools()メソッドがあってそこにパラメータとして、DateTimeTools()のオブジェクトを設定する。
+   </br> 2\.2. コントローラ的なツール設定（コントローラにチャットクライアントのツールメソッドにツール設定）
+
+```java
+@RestController
+@RequestMapping
+public class TimeController {
+    private final ChatClient chatClient;
+
+    public TimeController(@Qualifier("TimeChatClient") ChatClient chatClient) {
+        this.chatClient = chatClient;
+    }
+
+    @GetMapping("/time")
+    public ResponseEntity<String> getTime(@RequestHeader("username") String username,
+                                          @RequestParam("message") String message) {
+        String answer = chatClient.prompt()
+                .user(message)
+                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID, username))
+                // DateTimeToolsのオブジェクト
+                .tools(new DateTimeTools())
+                .call().content();
+        return ResponseEntity.ok(answer);
+    }
+}
+```
+
+### HelpDestTicket
+ヘルプデスクチケット作成流れ：
+1. entity定義　：　テーブル名、行名や列名設定 →　チケットデータ型設定。: helpDeskTicket
+2. model定義　：　テーブル　representation→　DBに保存するため、モデルを設定する : 
+TicketRequest　：　依頼されたチケット作成するためのレコードレポジトリ
+2. repository定義　：　(HelpDeskRepositoryはJdbcRepositoryを実装して、) : 
+HelpDeskRepository -> HelpDeskRepository.findByUsername -> 自動的にユーザー名で検索
+3. service定義: TicketRequestレコードを使って、サービスを作る。: 
+HelpDeskService　→　HelpDeskService.createTicket　→ builderを使って、チケット作成を行う
+4. tools定義：　サービスを使って、ツール作成する。: HelpDeskTicketTools
+5. ツール設定（デフォルトツールやChatClientを呼ぶ時ツール設定）: HelpDeskConfig, HelpDeskManageController.
+HelpDeskTicketToolツール関数：   createTicket,getTicketByStatus
+
+チャットクライアントで構成設定する時、デフォルトツールやコントローラ側でツール読んでHelpDeskTicketToolのオブジェクトを設定しています。
+1. createTicket　→　HelpDeskService.createTicket
+2. getTicketByStatus　→　HelpDeskRepository.findByUsername
+
+Restコントローラをちゃんとに作成していないですがAIを理解して、チケット作成します。
+
+
+
+

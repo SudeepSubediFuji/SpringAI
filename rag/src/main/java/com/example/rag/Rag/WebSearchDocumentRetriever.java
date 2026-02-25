@@ -50,6 +50,7 @@ public class WebSearchDocumentRetriever implements DocumentRetriever {
                 .body(new TavilyRequestPayload(q, "advanced", resultLimit))
                 .retrieve()
                 .body(TavilyResponsePayload.class);
+//        logger.info("ResponseResult : " + responsePayload.results() + "ResponseOnly: " + responsePayload + responsePayload.results());
 
         if (responsePayload == null || CollectionUtils.isEmpty(responsePayload.results())) {
             return List.of();

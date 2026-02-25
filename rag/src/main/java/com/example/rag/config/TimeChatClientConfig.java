@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TimeChatClientConfig {
 
-    // Only defineing the chatClient as following as previously circular dependency and other error are prune to grow
+    // Only defining the chatClient as following as previously circular dependency and other error are prune to grow
     @Bean("TimeChatClient")
     public ChatClient chatClient(ChatClient.Builder chatClientBuilder,ChatMemory chatMemory){
         ChatOptions chatOptions = ChatOptions.builder().model("gpt-5-mini").build();
